@@ -1,6 +1,5 @@
-version: '3'
-
+version: '1'
 services:
   node-app:
-    container_name: node-app-test
+    container_name: japanese-learner-api-test
     command: yarn test
