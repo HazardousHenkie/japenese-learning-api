@@ -3,7 +3,7 @@ const { toJSON } = require('./plugins')
 
 const wordSchema = mongoose.Schema(
     {
-        name: {
+        word: {
             type: String,
             required: true,
             trim: true,

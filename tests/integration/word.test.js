@@ -14,9 +14,9 @@ describe('Word routes', () => {
 
         beforeEach(() => {
             newWord = {
-                word: faker.word.findWord(),
-                reading: faker.word.findWord(),
-                meaning: faker.word.findWord(),
+                word: faker.random.word(),
+                reading: faker.random.word(),
+                meaning: faker.random.word(),
             }
         })
 
@@ -26,7 +26,7 @@ describe('Word routes', () => {
                 .send(newWord)
                 .expect(httpStatus.CREATED)
 
-            // chek body return results
+            // check body return results
             expect(res.body).toEqual({
                 id: expect.anything(),
                 word: newWord.word,
@@ -302,9 +302,9 @@ describe('Word routes', () => {
         test('should return 200 and successfully update word if data is ok', async () => {
             await insertWords([wordOne])
             const updateBody = {
-                word: faker.word.findWord(),
-                reading: faker.word.findWord(),
-                meaning: faker.word.findWord(),
+                word: faker.random.word(),
+                reading: faker.random.word(),
+                meaning: faker.random.word(),
             }
 
             const res = await request(app)
@@ -341,7 +341,7 @@ describe('Word routes', () => {
         // })
 
         test('should return 404 if user is updating another word that is not found', async () => {
-            const updateBody = { word: faker.word.findWord() }
+            const updateBody = { word: faker.random.word() }
 
             await request(app)
                 .patch(`/v1/words/${wordOne._id}`)

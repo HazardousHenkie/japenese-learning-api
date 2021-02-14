@@ -5,16 +5,16 @@ const Word = require('../../src/models/word.model')
 
 const wordOne = {
     _id: mongoose.Types.ObjectId(),
-    word: faker.word.findWord(),
-    reading: faker.word.findWord(),
-    meaning: faker.word.findWord(),
+    word: faker.random.word(),
+    reading: faker.random.word(),
+    meaning: faker.random.word(),
 }
 
 const wordTwo = {
     _id: mongoose.Types.ObjectId(),
-    word: faker.word.findWord(),
-    reading: faker.word.findWord(),
-    meaning: faker.word.findWord(),
+    word: faker.random.word(),
+    reading: faker.random.word(),
+    meaning: faker.random.word(),
 }
 
 const insertWords = async (words) => {
