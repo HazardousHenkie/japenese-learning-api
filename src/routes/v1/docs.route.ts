@@ -17,5 +17,4 @@ router.get(
         explorer: true,
     })
 )
-
-module.exports = router
+export default router

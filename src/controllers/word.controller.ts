@@ -1,8 +1,8 @@
-const httpStatus = require('http-status')
-const pick = require('../utils/pick')
-const ApiError = require('../utils/ApiError')
-const catchAsync = require('../utils/catchAsync')
-const { wordService } = require('../services')
+import httpStatus from 'http-status'
+import pick from '../utils/pick'
+import ApiError from '../utils/ApiError'
+import catchAsync from '../utils/catchAsync'
+import { wordService } from '../services'
 
 const createWord = catchAsync(async (req, res) => {
     const word = await wordService.createWord(req.body)
@@ -34,7 +34,7 @@ const deleteWord = catchAsync(async (req, res) => {
     res.status(httpStatus.NO_CONTENT).send()
 })
 
-module.exports = {
+export default {
     createWord,
     getWords,
     getWord,

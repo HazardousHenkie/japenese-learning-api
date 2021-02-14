@@ -32,4 +32,4 @@ wordSchema.plugin(toJSON)
  */
 const Word = mongoose.model('Word', wordSchema)
 
-module.exports = Word
+export default Word
