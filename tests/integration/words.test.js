@@ -8,7 +8,7 @@ const { wordOne, wordTwo, insertWords } = require('../fixtures/word.fixture')
 
 setupTestDB()
 
-describe('Word routes', () => {
+describe('Words routes', () => {
     describe('POST /v1/words', () => {
         let newWord
 

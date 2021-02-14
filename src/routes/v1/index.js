@@ -1,6 +1,6 @@
 const express = require('express')
 
-const wordRoute = require('./word.route')
+const wordRoute = require('./words.route')
 const docsRoute = require('./docs.route')
 const config = require('../../config/config')
 

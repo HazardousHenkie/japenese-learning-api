@@ -1,1 +1,1 @@
-module.exports.wordController = require('./word.controller')
+module.exports.wordController = require('./words.controller')

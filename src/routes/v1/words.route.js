@@ -1,8 +1,8 @@
 const express = require('express')
 
 const validate = require('../../middlewares/validate')
-const wordValidation = require('../../validations/word.validation')
-const wordController = require('../../controllers/word.controller')
+const wordValidation = require('../../validations/words.validation')
+const wordController = require('../../controllers/words.controller')
 
 const router = express.Router()
 

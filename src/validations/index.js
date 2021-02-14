@@ -1,1 +1,1 @@
-module.exports.wordValidation = require('./word.validation')
+module.exports.wordValidation = require('./words.validation')
