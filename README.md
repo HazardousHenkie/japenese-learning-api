@@ -7,43 +7,43 @@
 
 ## Table of Contents
 
-- [Features](#features)
-- [Commands](#commands)
-- [Environment Variables](#environment-variables)
-- [Project Structure](#project-structure)
-- [API Documentation](#api-documentation)
-- [Error Handling](#error-handling)
-- [Validation](#validation)
-- [Authentication](#authentication)
-- [Authorization](#authorization)
-- [Logging](#logging)
-- [Custom Mongoose Plugins](#custom-mongoose-plugins)
-- [Linting](#linting)
-- [Contributing](#contributing)
+-   [Features](#features)
+-   [Commands](#commands)
+-   [Environment Variables](#environment-variables)
+-   [Project Structure](#project-structure)
+-   [API Documentation](#api-documentation)
+-   [Error Handling](#error-handling)
+-   [Validation](#validation)
+-   [Authentication](#authentication)
+-   [Authorization](#authorization)
+-   [Logging](#logging)
+-   [Custom Mongoose Plugins](#custom-mongoose-plugins)
+-   [Linting](#linting)
+-   [Contributing](#contributing)
 
 ## Features
 
-- **ES9**: latest ECMAScript features
-- **NoSQL database**: [MongoDB](https://www.mongodb.com) object data modeling using [Mongoose](https://mongoosejs.com)
-- **Validation**: request data validation using [Joi](https://github.com/hapijs/joi)
-- **Logging**: using [winston](https://github.com/winstonjs/winston) and [morgan](https://github.com/expressjs/morgan)
-- **Testing**: unit and integration tests using [Jest](https://jestjs.io)
-- **Error handling**: centralized error handling mechanism
-- **API documentation**: with [swagger-jsdoc](https://github.com/Surnet/swagger-jsdoc) and [swagger-ui-express](https://github.com/scottie1984/swagger-ui-express)
-- **Process management**: advanced production process management using [PM2](https://pm2.keymetrics.io)
-- **Dependency management**: with [Yarn](https://yarnpkg.com)
-- **Environment variables**: using [dotenv](https://github.com/motdotla/dotenv) and [cross-env](https://github.com/kentcdodds/cross-env#readme)
-- **Security**: set security HTTP headers using [helmet](https://helmetjs.github.io)
-- **Santizing**: sanitize request data against xss and query injection
-- **CORS**: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
-- **Compression**: gzip compression with [compression](https://github.com/expressjs/compression)
-- **CI**: continuous integration with [Travis CI](https://travis-ci.org)
-- **Docker support**
-- **Code coverage**: using [coveralls](https://coveralls.io)
-- **Code quality**: with [Codacy](https://www.codacy.com)
-- **Git hooks**: with [husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged)
-- **Linting**: with [ESLint](https://eslint.org) and [Prettier](https://prettier.io)
-- **Editor config**: consistent editor configuration using [EditorConfig](https://editorconfig.org)
+-   **ES9**: latest ECMAScript features
+-   **NoSQL database**: [MongoDB](https://www.mongodb.com) object data modeling using [Mongoose](https://mongoosejs.com)
+-   **Validation**: request data validation using [Joi](https://github.com/hapijs/joi)
+-   **Logging**: using [winston](https://github.com/winstonjs/winston) and [morgan](https://github.com/expressjs/morgan)
+-   **Testing**: unit and integration tests using [Jest](https://jestjs.io)
+-   **Error handling**: centralized error handling mechanism
+-   **API documentation**: with [swagger-jsdoc](https://github.com/Surnet/swagger-jsdoc) and [swagger-ui-express](https://github.com/scottie1984/swagger-ui-express)
+-   **Process management**: advanced production process management using [PM2](https://pm2.keymetrics.io)
+-   **Dependency management**: with [Yarn](https://yarnpkg.com)
+-   **Environment variables**: using [dotenv](https://github.com/motdotla/dotenv) and [cross-env](https://github.com/kentcdodds/cross-env#readme)
+-   **Security**: set security HTTP headers using [helmet](https://helmetjs.github.io)
+-   **Santizing**: sanitize request data against xss and query injection
+-   **CORS**: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
+-   **Compression**: gzip compression with [compression](https://github.com/expressjs/compression)
+-   **CI**: continuous integration with [Travis CI](https://travis-ci.org)
+-   **Docker support**
+-   **Code coverage**: using [coveralls](https://coveralls.io)
+-   **Code quality**: with [Codacy](https://www.codacy.com)
+-   **Git hooks**: with [husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged)
+-   **Linting**: with [ESLint](https://eslint.org) and [Prettier](https://prettier.io)
+-   **Editor config**: consistent editor configuration using [EditorConfig](https://editorconfig.org)
 
 ## Commands
 
@@ -126,12 +126,12 @@ To view the list of available APIs and their specifications, run the server and 
 
 List of available routes:
 
-**User routes**:\
-`POST /v1/users` - create a user\
-`GET /v1/users` - get all users\
-`GET /v1/users/:userId` - get user\
-`PATCH /v1/users/:userId` - update user\
-`DELETE /v1/users/:userId` - delete user
+**Word routes**:\
+`POST /v1/words` - create a word\
+`GET /v1/words` - get all words\
+`GET /v1/words/:wordId` - get word\
+`PATCH /v1/words/:wordId` - update word\
+`DELETE /v1/words/:wordId` - delete word
 
 ## Error Handling
 
@@ -140,20 +140,20 @@ The app has a centralized error handling mechanism.
 Controllers should try to catch the errors and forward them to the error handling middleware (by calling `next(error)`). For convenience, you can also wrap the controller inside the catchAsync utility wrapper, which forwards the error.
 
 ```javascript
-const catchAsync = require('../utils/catchAsync');
+const catchAsync = require('../utils/catchAsync')
 
 const controller = catchAsync(async (req, res) => {
-  // this error will be forwarded to the error handling middleware
-  throw new Error('Something wrong happened');
-});
+    // this error will be forwarded to the error handling middleware
+    throw new Error('Something wrong happened')
+})
 ```
 
 The error handling middleware sends an error response, which has the following format:
 
 ```json
 {
-  "code": 404,
-  "message": "Not found"
+    "code": 404,
+    "message": "Not found"
 }
 ```
 
@@ -161,19 +161,19 @@ When running in development mode, the error response also contains the error sta
 
 The app has a utility ApiError class to which you can attach a response code and a message, and then throw it from anywhere (catchAsync will catch it).
 
-For example, if you are trying to get a user from the DB who is not found, and you want to send a 404 error, the code should look something like:
+For example, if you are trying to get a word from the DB who is not found, and you want to send a 404 error, the code should look something like:
 
 ```javascript
-const httpStatus = require('http-status');
-const ApiError = require('../utils/ApiError');
-const User = require('../models/User');
+const httpStatus = require('http-status')
+const ApiError = require('../utils/ApiError')
+const Word = require('../models/Word')
 
-const getUser = async (userId) => {
-  const user = await User.findById(userId);
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-  }
-};
+const getWord = async (wordId) => {
+    const word = await Word.findById(wordId)
+    if (!word) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Word not found')
+    }
+}
 ```
 
 ## Validation
@@ -183,14 +183,18 @@ Request data is validated using [Joi](https://joi.dev/). Check the [documentatio
 The validation schemas are defined in the `src/validations` directory and are used in the routes by providing them as parameters to the `validate` middleware.
 
 ```javascript
-const express = require('express');
-const validate = require('../../middlewares/validate');
-const userValidation = require('../../validations/user.validation');
-const userController = require('../../controllers/user.controller');
+const express = require('express')
+const validate = require('../../middlewares/validate')
+const wordValidation = require('../../validations/word.validation')
+const wordController = require('../../controllers/word.controller')
 
-const router = express.Router();
+const router = express.Router()
 
-router.post('/users', validate(userValidation.createUser), userController.createUser);
+router.post(
+    '/words',
+    validate(wordValidation.createWord),
+    wordController.createWord
+)
 ```
 
 ## Logging
@@ -200,14 +204,14 @@ Import the logger from `src/config/logger.js`. It is using the [Winston](https:/
 Logging should be done according to the following severity levels (ascending order from most important to least important):
 
 ```javascript
-const logger = require('<path to src>/config/logger');
+const logger = require('<path to src>/config/logger')
 
-logger.error('message'); // level 0
-logger.warn('message'); // level 1
-logger.info('message'); // level 2
-logger.http('message'); // level 3
-logger.verbose('message'); // level 4
-logger.debug('message'); // level 5
+logger.error('message') // level 0
+logger.warn('message') // level 1
+logger.info('message') // level 2
+logger.http('message') // level 3
+logger.verbose('message') // level 4
+logger.debug('message') // level 5
 ```
 
 In development mode, log messages of all severity levels will be printed to the console.
@@ -223,27 +227,27 @@ Note: API request information (request url, response code, timestamp, etc.) are 
 The app also contains 1 custom mongoose plugins that you can attach to any mongoose model schema. You can find the plugins in `src/models/plugins`.
 
 ```javascript
-const mongoose = require('mongoose');
-const { toJSON } = require('./plugins');
+const mongoose = require('mongoose')
+const { toJSON } = require('./plugins')
 
-const userSchema = mongoose.Schema(
-  {
-    /* schema definition here */
-  },
-  { timestamps: true }
-);
+const wordSchema = mongoose.Schema(
+    {
+        /* schema definition here */
+    },
+    { timestamps: true }
+)
 
-userSchema.plugin(toJSON);
+wordSchema.plugin(toJSON)
 
-const User = mongoose.model('User', userSchema);
+const Word = mongoose.model('Word', wordSchema)
 ```
 
 ### toJSON
 
 The toJSON plugin applies the following changes in the toJSON transform call:
 
-- removes \_\_v, createdAt, updatedAt, and any schema path that has private: true
-- replaces \_id with id
+-   removes \_\_v, createdAt, updatedAt, and any schema path that has private: true
+-   replaces \_id with id
 
 ## Linting
 

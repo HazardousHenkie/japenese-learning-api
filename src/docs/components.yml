@@ -1,6 +1,6 @@
 components:
   schemas:
-    User:
+    Word:
       type: object
       properties:
         id:
@@ -12,12 +12,12 @@ components:
           type: string
         role:
           type: string
-          enum: [user, admin]
+          enum: [word, admin]
       example:
         id: 5ebac534954b54139806c112
         email: fake@example.com
         name: fake name
-        role: user
+        role: word
 
     Token:
       type: object
