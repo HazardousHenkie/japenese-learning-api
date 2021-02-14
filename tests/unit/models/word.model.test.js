@@ -6,9 +6,9 @@ describe('Word model', () => {
         let newWord
         beforeEach(() => {
             newWord = {
-                word: newWord.word,
-                reading: newWord.reading,
-                meaning: newWord.meaning,
+                word: faker.random.word(),
+                reading: faker.random.word(),
+                meaning: faker.random.word(),
             }
         })
 
