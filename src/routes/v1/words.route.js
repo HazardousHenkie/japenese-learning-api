@@ -110,13 +110,6 @@ module.exports = router
  *            minimum: 1
  *          default: 10
  *          description: Maximum number of words
- *        - in: query
- *          name: page
- *          schema:
- *            type: integer
- *            minimum: 1
- *            default: 1
- *          description: Page number
  *      responses:
  *        "200":
  *          description: OK
@@ -129,18 +122,6 @@ module.exports = router
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/Word'
- *                  page:
- *                    type: integer
- *                    example: 1
- *                  limit:
- *                    type: integer
- *                    example: 10
- *                  totalPages:
- *                    type: integer
- *                    example: 1
- *                  totalResults:
- *                    type: integer
- *                    example: 1
  *        "401":
  *          $ref: '#/components/responses/Unauthorized'
  *        "403":

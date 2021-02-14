@@ -11,7 +11,6 @@
         "test": "jest -i",
         "test:watch": "jest -i --watchAll",
         "coverage": "jest -i --coverage",
-        "coverage:coveralls": "jest -i --coverage --coverageReporters=text-lcov | coveralls",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
         "prettier": "prettier --check '**/*.{ts,js}'",
@@ -40,7 +39,6 @@
         "xss-clean": "^0.1.1"
     },
     "devDependencies": {
-        "coveralls": "^3.0.7",
         "eslint": "^7.0.0",
         "eslint-config-airbnb-base": "^14.0.0",
         "eslint-config-prettier": "^7.1.0",

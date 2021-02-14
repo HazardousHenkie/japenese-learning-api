@@ -10,5 +10,7 @@ setup cors
 change readme icons
 put online
 
-check automatic swagger generation
+
 check tests
+add authenticaiton
+add user to words

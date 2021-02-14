@@ -15,21 +15,6 @@ describe('Word model', () => {
         test('should correctly validate a valid word', async () => {
             await expect(new Word(newWord).validate()).resolves.toBeUndefined()
         })
-
-        test('should throw a validation error if word is invalid', async () => {
-            newWord.word = 'invaliWord'
-            await expect(new Word(newWord).validate()).rejects.toThrow()
-        })
-
-        test('should throw a validation error if reading is invalid', async () => {
-            newWord.reading = 'invaliWord'
-            await expect(new Word(newWord).validate()).rejects.toThrow()
-        })
-
-        test('should throw a validation error if meaning is invalid', async () => {
-            newWord.meaning = 'invaliWord'
-            await expect(new Word(newWord).validate()).rejects.toThrow()
-        })
     })
 
     describe('Word toJSON()', () => {

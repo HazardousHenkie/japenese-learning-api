@@ -11,12 +11,8 @@ const createWord = {
 
 const getWords = {
     query: Joi.object().keys({
-        word: Joi.string().required(),
-        reading: Joi.string().required(),
-        meaning: Joi.string().required(),
+        word: Joi.string(),
         sortBy: Joi.string(),
-        limit: Joi.number().integer(),
-        page: Joi.number().integer(),
     }),
 }
 

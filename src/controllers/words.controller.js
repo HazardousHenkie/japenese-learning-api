@@ -11,9 +11,8 @@ const createWord = catchAsync(async (req, res) => {
 
 const getWords = catchAsync(async (req, res) => {
     const filter = pick(req.query, ['word'])
-    const options = pick(req.query, ['sortBy', 'limit', 'page'])
-    const result = await wordService.queryWords(filter, options)
-    res.send(result)
+    const result = await wordService.queryWords(filter)
+    res.send({ results: result })
 })
 
 const getWord = catchAsync(async (req, res) => {
