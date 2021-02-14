@@ -23,7 +23,7 @@ module.exports = router
  * @swagger
  * tags:
  *   name: Words
- *   description: Word management and retrieval
+ *   description: Words to study
  */
 
 /**
@@ -32,7 +32,6 @@ module.exports = router
  *  /words:
  *    post:
  *      summary: Create a word
- *      description: Only admins can create other words.
  *      tags: [Words]
  *      security:
  *        - bearerAuth: []
@@ -43,30 +42,20 @@ module.exports = router
  *            schema:
  *              type: object
  *              required:
- *                - name
- *                - email
- *                - password
- *                - role
+ *                - word
+ *                - reading
+ *                - meaning
  *              properties:
- *                name:
+ *                word:
  *                  type: string
- *                email:
+ *                reading:
  *                  type: string
- *                  format: email
- *                  description: must be unique
- *                password:
+ *                meaning:
  *                  type: string
- *                  format: password
- *                  minLength: 8
- *                  description: At least one number and one letter
- *                role:
- *                   type: string
- *                   enum: [word, admin]
  *              example:
- *                name: fake name
- *                email: fake@example.com
- *                password: password1
- *                role: word
+ *                name: 漢字
+ *                reading: kanji
+ *                meaning: Japanese charcter
  *      responses:
  *        "201":
  *          description: Created
@@ -74,8 +63,6 @@ module.exports = router
  *            application/json:
  *              schema:
  *                 $ref: '#/components/schemas/Word'
- *        "400":
- *          $ref: '#/components/responses/DuplicateEmail'
  *        "401":
  *          $ref: '#/components/responses/Unauthorized'
  *        "403":
@@ -83,21 +70,15 @@ module.exports = router
  *
  *    get:
  *      summary: Get all words
- *      description: Only admins can retrieve all words.
  *      tags: [Words]
  *      security:
  *        - bearerAuth: []
  *      parameters:
  *        - in: query
- *          name: name
+ *          word: word
  *          schema:
  *            type: string
- *          description: Word name
- *        - in: query
- *          name: role
- *          schema:
- *            type: string
- *          description: Word role
+ *          description: Word
  *        - in: query
  *          name: sortBy
  *          schema:
@@ -153,7 +134,6 @@ module.exports = router
  *  /words/{id}:
  *    get:
  *      summary: Get a word
- *      description: Logged in words can fetch only their own word information. Only admins can fetch other words.
  *      tags: [Words]
  *      security:
  *        - bearerAuth: []
@@ -180,7 +160,6 @@ module.exports = router
  *
  *    patch:
  *      summary: Update a word
- *      description: Logged in words can only update their own information. Only admins can update other words.
  *      tags: [Words]
  *      security:
  *        - bearerAuth: []
@@ -198,21 +177,16 @@ module.exports = router
  *            schema:
  *              type: object
  *              properties:
- *                name:
+ *                word:
  *                  type: string
- *                email:
+ *                reading:
  *                  type: string
- *                  format: email
- *                  description: must be unique
- *                password:
+ *                meaning:
  *                  type: string
- *                  format: password
- *                  minLength: 8
- *                  description: At least one number and one letter
  *              example:
- *                name: fake name
- *                email: fake@example.com
- *                password: password1
+ *                word: 漢字
+ *                reading: kanji
+ *                meaning: Japanese character
  *      responses:
  *        "200":
  *          description: OK
@@ -220,8 +194,6 @@ module.exports = router
  *            application/json:
  *              schema:
  *                 $ref: '#/components/schemas/Word'
- *        "400":
- *          $ref: '#/components/responses/DuplicateEmail'
  *        "401":
  *          $ref: '#/components/responses/Unauthorized'
  *        "403":
@@ -231,7 +203,6 @@ module.exports = router
  *
  *    delete:
  *      summary: Delete a word
- *      description: Logged in words can delete only themselves. Only admins can delete other words.
  *      tags: [Words]
  *      security:
  *        - bearerAuth: []
