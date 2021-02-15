@@ -10,7 +10,7 @@ const setupTestDB = () => {
         await Promise.all(
             Object.values(
                 mongoose.connection.collections
-            ).map(async (collection) => collection.deleteMany())
+            ).map(async (collection) => collection.deleteMany({}))
         )
     })
 

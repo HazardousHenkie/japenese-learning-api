@@ -5,13 +5,13 @@ import ApiError from 'utils/ApiError'
 import { errorConverter, errorHandler } from 'middlewares/error'
 import config from 'config/config'
 import logger from 'config/logger'
-   
+
 describe('Error middlewares', () => {
     describe('Error converter', () => {
         test('should return the same ApiError object it was called with', () => {
             const error = new ApiError(httpStatus.BAD_REQUEST, 'Any error')
             const next = jest.fn()
- 
+
             errorConverter(
                 error,
                 httpMocks.createRequest(),
@@ -23,7 +23,7 @@ describe('Error middlewares', () => {
         })
 
         test('should convert an Error to ApiError and preserve its status and message', () => {
-            const error = new Error('Any error')
+            const error: ApiError = new Error('Any error')
             error.statusCode = httpStatus.BAD_REQUEST
             const next = jest.fn()
 

@@ -4,7 +4,13 @@
  *  - replaces _id with id
  */
 
-const deleteAtPath = (obj, path, index) => {
+import { Schema } from 'mongoose'
+
+const deleteAtPath = (
+    obj: Record<string, any>,
+    path: string[],
+    index: number
+) => {
     if (index === path.length - 1) {
         delete obj[path[index]]
         return
@@ -12,7 +18,7 @@ const deleteAtPath = (obj, path, index) => {
     deleteAtPath(obj[path[index]], path, index + 1)
 }
 
-const toJSON = (schema) => {
+const toJSON = (schema: Schema) => {
     let transform
     if (schema.options.toJSON && schema.options.toJSON.transform) {
         transform = schema.options.toJSON.transform

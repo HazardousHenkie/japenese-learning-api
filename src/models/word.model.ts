@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
-import { toJSON } from './plugins'
+import toJSON from './plugins/toJSON.plugin'
 
-const wordSchema = mongoose.Schema(
+const wordSchema = new mongoose.Schema(
     {
         word: {
             type: String,

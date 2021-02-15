@@ -8,13 +8,13 @@
         "project": "./tsconfig.json"
     },
     "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
         "plugin:jest/recommended",
         "plugin:security/recommended",
         "prettier",
         "prettier/@typescript-eslint",
-        "plugin:prettier/recommended",
-        "airbnb-typescript/base"
-
+        "plugin:prettier/recommended"
     ],
     "plugins": ["jest", "security", "prettier", "@typescript-eslint"],
     "rules": {
@@ -27,6 +27,7 @@
         "security/detect-object-injection": "off",
         "@typescript-eslint/indent": "off",
         "@typescript-eslint/semi": "off",
-        "@typescript-eslint/comma-dangle": "off"
+        "@typescript-eslint/comma-dangle": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off"
     }
 }

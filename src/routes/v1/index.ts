@@ -2,7 +2,7 @@ import express from 'express'
 
 import wordRoute from './words.route'
 import docsRoute from './docs.route'
-import config from '../../config/config'
+import config from 'config/config'
 
 const router = express.Router()
 

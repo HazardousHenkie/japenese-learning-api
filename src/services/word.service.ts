@@ -1,46 +1,24 @@
 import httpStatus from 'http-status'
-import { Word } from '../models'
-import ApiError from '../utils/ApiError'
+import Word from 'models/word.model'
+import { FilterQuery } from 'mongoose'
+import ApiError from 'utils/ApiError'
 
-/**
- * Create a word
- * @param {Object} wordBody
- * @returns {Promise<Word>}
- */
-const createWord = async (wordBody) => {
+const createWord = async (wordBody: Body) => {
     const word = await Word.create(wordBody)
     return word
 }
 
-console.log('test')
-/**
- * Query for words
- * @param {Object} filter - Mongo filter
- * @param {Object} options - Query options
- * @returns {Promise<QueryResult>}
- */
-const queryWords = async (filter) => {
+const queryWords = async (filter: FilterQuery) => {
     const words = await Word.find(filter)
 
     return words
 }
 
-/**
- * Get word by id
- * @param {ObjectId} id
- * @returns {Promise<Word>}
- */
-const getWordById = async (id) => {
+const getWordById = async (id: string) => {
     return Word.findById(id)
 }
 
-/**
- * Update word by id
- * @param {ObjectId} wordId
- * @param {Object} updateBody
- * @returns {Promise<Word>}
- */
-const updateWordById = async (wordId, updateBody) => {
+const updateWordById = async (wordId: string, updateBody: Body) => {
     const word = await getWordById(wordId)
     if (!word) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Word not found')
@@ -51,7 +29,7 @@ const updateWordById = async (wordId, updateBody) => {
     return word
 }
 
-const deleteWordById = async (wordId) => {
+const deleteWordById = async (wordId: string) => {
     const word = await getWordById(wordId)
     if (!word) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Word not found')

@@ -927,6 +927,19 @@
   dependencies:
     "@types/superagent" "*"
 
+"@types/swagger-jsdoc@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@types/swagger-jsdoc/-/swagger-jsdoc-6.0.0.tgz#4d2308b6b9a650cd476b49274889608a2b18ef46"
+  integrity sha512-0snGxQMvrPOFEFnEVcXAm8zKH7aLB5tAsUTXfWwQu7XGfMBelt+tSLzF5lH0D+ppRiZrwPnWF7f3fpDHZaWzag==
+
+"@types/swagger-ui-express@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@types/swagger-ui-express/-/swagger-ui-express-4.1.2.tgz#cfc884904a104c3193f46f423d04ee0416be1ef4"
+  integrity sha512-t9teFTU8dKe69rX9EwL6OM2hbVquYdFM+sQ0REny4RalPlxAm+zyP04B12j4c7qEuDS6CnlwICywqWStPA3v4g==
+  dependencies:
+    "@types/express" "*"
+    "@types/serve-static" "*"
+
 "@types/yargs-parser@*":
   version "20.2.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-20.2.0.tgz#dd3e6699ba3237f0348cd085e4698780204842f9"
