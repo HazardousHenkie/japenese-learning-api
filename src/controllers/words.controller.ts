@@ -1,8 +1,8 @@
 import httpStatus from 'http-status'
-import pick from '../utils/pick'
-import ApiError from '../utils/ApiError'
-import catchAsync from '../utils/catchAsync'
-import { wordService } from '../services'
+import wordService from 'src/services/word.service'
+import ApiError from 'src/utils/ApiError'
+import catchAsync from 'src/utils/catchAsync'
+import pick from 'src/utils/pick'
 
 const createWord = catchAsync(async (req, res) => {
     const word = await wordService.createWord(req.body)
@@ -11,9 +11,8 @@ const createWord = catchAsync(async (req, res) => {
 
 const getWords = catchAsync(async (req, res) => {
     const filter = pick(req.query, ['word'])
-    const options = pick(req.query, ['sortBy', 'limit', 'page'])
-    const result = await wordService.queryWords(filter, options)
-    res.send(result)
+    const result = await wordService.queryWords(filter)
+    res.send({ results: result })
 })
 
 const getWord = catchAsync(async (req, res) => {

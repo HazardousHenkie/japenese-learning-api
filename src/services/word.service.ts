@@ -1,6 +1,6 @@
-const httpStatus = require('http-status')
-const { Word } = require('../models')
-const ApiError = require('../utils/ApiError')
+import httpStatus from 'http-status'
+import { Word } from '../models'
+import ApiError from '../utils/ApiError'
 
 /**
  * Create a word
@@ -12,17 +12,16 @@ const createWord = async (wordBody) => {
     return word
 }
 
+console.log('test')
 /**
  * Query for words
  * @param {Object} filter - Mongo filter
  * @param {Object} options - Query options
- * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
- * @param {number} [options.limit] - Maximum number of results per page (default = 10)
- * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
-const queryWords = async (filter, options) => {
-    const words = await Word.find(filter, options)
+const queryWords = async (filter) => {
+    const words = await Word.find(filter)
+
     return words
 }
 
@@ -52,11 +51,6 @@ const updateWordById = async (wordId, updateBody) => {
     return word
 }
 
-/**
- * Delete word by id
- * @param {ObjectId} wordId
- * @returns {Promise<Word>}
- */
 const deleteWordById = async (wordId) => {
     const word = await getWordById(wordId)
     if (!word) {
@@ -66,7 +60,7 @@ const deleteWordById = async (wordId) => {
     return word
 }
 
-module.exports = {
+export default {
     createWord,
     queryWords,
     getWordById,

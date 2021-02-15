@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const { toJSON } = require('./plugins')
+import mongoose from 'mongoose'
+import { toJSON } from './plugins'
 
 const wordSchema = mongoose.Schema(
     {
@@ -24,12 +24,8 @@ const wordSchema = mongoose.Schema(
     }
 )
 
-// add plugin that converts mongoose to json
 wordSchema.plugin(toJSON)
 
-/**
- * @typedef Word
- */
 const Word = mongoose.model('Word', wordSchema)
 
 export default Word

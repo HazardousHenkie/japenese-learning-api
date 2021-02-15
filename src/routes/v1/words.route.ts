@@ -1,23 +1,22 @@
-const express = require('express')
-
-const validate = require('../../middlewares/validate')
-const wordValidation = require('../../validations/word.validation')
-const wordController = require('../../controllers/word.controller')
+import express from 'express'
+import wordsController from 'src/controllers/words.controller'
+import validate from 'src/middlewares/validate'
+import wordsValidation from 'src/validations/words.validation'
 
 const router = express.Router()
 
 router
     .route('/')
-    .post(validate(wordValidation.createWord), wordController.createWord)
-    .get(validate(wordValidation.getWords), wordController.getWords)
+    .post(validate(wordsValidation.createWord), wordsController.createWord)
+    .get(validate(wordsValidation.getWords), wordsController.getWords)
 
 router
     .route('/:wordId')
-    .get(validate(wordValidation.getWord), wordController.getWord)
-    .patch(validate(wordValidation.updateWord), wordController.updateWord)
-    .delete(validate(wordValidation.deleteWord), wordController.deleteWord)
+    .get(validate(wordsValidation.getWord), wordsController.getWord)
+    .patch(validate(wordsValidation.updateWord), wordsController.updateWord)
+    .delete(validate(wordsValidation.deleteWord), wordsController.deleteWord)
 
-module.exports = router
+export default router
 
 /**
  * @swagger
@@ -91,13 +90,6 @@ module.exports = router
  *            minimum: 1
  *          default: 10
  *          description: Maximum number of words
- *        - in: query
- *          name: page
- *          schema:
- *            type: integer
- *            minimum: 1
- *            default: 1
- *          description: Page number
  *      responses:
  *        "200":
  *          description: OK
@@ -110,18 +102,6 @@ module.exports = router
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/Word'
- *                  page:
- *                    type: integer
- *                    example: 1
- *                  limit:
- *                    type: integer
- *                    example: 10
- *                  totalPages:
- *                    type: integer
- *                    example: 1
- *                  totalResults:
- *                    type: integer
- *                    example: 1
  *        "401":
  *          $ref: '#/components/responses/Unauthorized'
  *        "403":

@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const config = require('../../src/config/config')
+import config from 'config/config'
+import mongoose from 'mongoose'
 
 const setupTestDB = () => {
     beforeAll(async () => {
@@ -19,4 +19,4 @@ const setupTestDB = () => {
     })
 }
 
-module.exports = setupTestDB
+export default setupTestDB

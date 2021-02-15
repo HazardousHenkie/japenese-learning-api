@@ -1,5 +1,5 @@
-const Joi = require('joi')
-const { objectId } = require('./custom.validation')
+import Joi from 'joi'
+import { objectId } from './custom.validation'
 
 const createWord = {
     body: Joi.object().keys({
@@ -11,12 +11,8 @@ const createWord = {
 
 const getWords = {
     query: Joi.object().keys({
-        word: Joi.string().required(),
-        reading: Joi.string().required(),
-        meaning: Joi.string().required(),
+        word: Joi.string(),
         sortBy: Joi.string(),
-        limit: Joi.number().integer(),
-        page: Joi.number().integer(),
     }),
 }
 
@@ -45,7 +41,7 @@ const deleteWord = {
     }),
 }
 
-module.exports = {
+export default {
     createWord,
     getWords,
     getWord,

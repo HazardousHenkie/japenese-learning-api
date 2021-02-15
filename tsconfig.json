@@ -1,23 +1,15 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "sourceMap": false,
-    "baseUrl": ".",
-    "noEmit": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "noImplicitAny": true,
-  },
-  "include": [
-    "src/**/*.ts",
-    "tests/**/*.ts",
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "strict": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "sourceMap": false,
+        "baseUrl": "src",
+        "noEmit": true,
+        "moduleResolution": "node",
+        "pretty": true
+    },
+    "exclude": ["node_modules"]
 }

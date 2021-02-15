@@ -1,14 +1,13 @@
-const request = require('supertest')
-const faker = require('faker')
-const httpStatus = require('http-status')
-const app = require('../../src/app')
-const setupTestDB = require('../utils/setupTestDB')
-const { Word } = require('../../src/models')
-const { wordOne, wordTwo, insertWords } = require('../fixtures/word.fixture')
+import request from 'supertest'
+import faker from 'faker'
+import httpStatus from 'http-status'
+import app from '../../src/app'
+import setupTestDB from '../utils/setupTestDB'
+import insertWords, { wordOne, wordTwo } from '../fixtures/word.fixture'
 
 setupTestDB()
 
-describe('Word routes', () => {
+describe('Words routes', () => {
     describe('POST /v1/words', () => {
         let newWord
 
@@ -37,7 +36,6 @@ describe('Word routes', () => {
             // check database entry
             const dbWord = await Word.findById(res.body.id)
             expect(dbWord).toBeDefined()
-            expect(dbWord.password).not.toBe(newWord.password)
             expect(dbWord).toMatchObject({
                 word: newWord.word,
                 reading: newWord.reading,
@@ -64,12 +62,8 @@ describe('Word routes', () => {
 
             expect(res.body).toEqual({
                 results: expect.any(Array),
-                page: 1,
-                limit: 10,
-                totalPages: 1,
-                totalResults: 3,
             })
-            expect(res.body.results).toHaveLength(3)
+            expect(res.body.results).toHaveLength(2)
             expect(res.body.results[0]).toEqual({
                 id: wordOne._id.toHexString(),
                 word: wordOne.word,
@@ -108,96 +102,9 @@ describe('Word routes', () => {
 
             expect(res.body).toEqual({
                 results: expect.any(Array),
-                page: 1,
-                limit: 10,
-                totalPages: 1,
-                totalResults: 1,
             })
             expect(res.body.results).toHaveLength(1)
             expect(res.body.results[0].id).toBe(wordOne._id.toHexString())
-        })
-
-        test('should correctly sort the returned array if descending sort param is specified', async () => {
-            await insertWords([wordOne, wordTwo])
-
-            const res = await request(app)
-                .get('/v1/words')
-                .query({ sortBy: 'word:desc' })
-                .send()
-                .expect(httpStatus.OK)
-
-            expect(res.body).toEqual({
-                results: expect.any(Array),
-                page: 1,
-                limit: 10,
-                totalPages: 1,
-                totalResults: 3,
-            })
-            expect(res.body.results).toHaveLength(3)
-            expect(res.body.results[0].id).toBe(wordOne._id.toHexString())
-            expect(res.body.results[1].id).toBe(wordTwo._id.toHexString())
-        })
-
-        test('should correctly sort the returned array if ascending sort param is specified', async () => {
-            await insertWords([wordOne, wordTwo])
-
-            const res = await request(app)
-                .get('/v1/words')
-                .query({ sortBy: 'word:asc' })
-                .send()
-                .expect(httpStatus.OK)
-
-            expect(res.body).toEqual({
-                results: expect.any(Array),
-                page: 1,
-                limit: 10,
-                totalPages: 1,
-                totalResults: 3,
-            })
-            expect(res.body.results).toHaveLength(3)
-            expect(res.body.results[1].id).toBe(wordOne._id.toHexString())
-            expect(res.body.results[2].id).toBe(wordTwo._id.toHexString())
-        })
-
-        test('should limit returned array if limit param is specified', async () => {
-            await insertWords([wordOne, wordTwo])
-
-            const res = await request(app)
-                .get('/v1/words')
-
-                .query({ limit: 2 })
-                .send()
-                .expect(httpStatus.OK)
-
-            expect(res.body).toEqual({
-                results: expect.any(Array),
-                page: 1,
-                limit: 2,
-                totalPages: 2,
-                totalResults: 3,
-            })
-            expect(res.body.results).toHaveLength(2)
-            expect(res.body.results[0].id).toBe(wordOne._id.toHexString())
-            expect(res.body.results[1].id).toBe(wordTwo._id.toHexString())
-        })
-
-        test('should return the correct page if page and limit params are specified', async () => {
-            await insertWords([wordOne, wordTwo])
-
-            const res = await request(app)
-                .get('/v1/words')
-                .query({ page: 2, limit: 2 })
-                .send()
-                .expect(httpStatus.OK)
-
-            expect(res.body).toEqual({
-                results: expect.any(Array),
-                page: 2,
-                limit: 2,
-                totalPages: 2,
-                totalResults: 3,
-            })
-            expect(res.body.results).toHaveLength(1)
         })
     })
 
@@ -210,11 +117,11 @@ describe('Word routes', () => {
                 .send()
                 .expect(httpStatus.OK)
 
-            expect(res.body).not.toHaveProperty('password')
             expect(res.body).toEqual({
                 id: wordOne._id.toHexString(),
-                email: wordOne.email,
-                name: wordOne.name,
+                word: wordOne.word,
+                reading: wordOne.reading,
+                meaning: wordOne.meaning,
             })
         })
 
@@ -264,15 +171,6 @@ describe('Word routes', () => {
         //         .expect(httpStatus.UNAUTHORIZED)
         // })
 
-        test('should return 403 error if word is trying to delete another word', async () => {
-            await insertWords([wordOne, wordTwo])
-
-            await request(app)
-                .delete(`/v1/words/${wordTwo._id}`)
-                .send()
-                .expect(httpStatus.FORBIDDEN)
-        })
-
         test('should return 204 if user is trying to delete another word', async () => {
             await insertWords([wordOne])
 
@@ -312,7 +210,6 @@ describe('Word routes', () => {
                 .send(updateBody)
                 .expect(httpStatus.OK)
 
-            expect(res.body).not.toHaveProperty('password')
             expect(res.body).toEqual({
                 id: wordOne._id.toHexString(),
                 word: updateBody.word,
@@ -322,7 +219,6 @@ describe('Word routes', () => {
 
             const dbWord = await Word.findById(wordOne._id)
             expect(dbWord).toBeDefined()
-            expect(dbWord.password).not.toBe(updateBody.password)
             expect(dbWord).toMatchObject({
                 word: updateBody.word,
                 reading: updateBody.reading,

@@ -1,8 +1,8 @@
-const express = require('express')
+import express from 'express'
 
-const wordRoute = require('./word.route')
-const docsRoute = require('./docs.route')
-const config = require('../../config/config')
+import wordRoute from './words.route'
+import docsRoute from './docs.route'
+import config from '../../config/config'
 
 const router = express.Router()
 
@@ -32,4 +32,4 @@ if (config.env === 'development') {
     })
 }
 
-module.exports = router
+export default router
