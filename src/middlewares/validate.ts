@@ -1,6 +1,6 @@
 import httpStatus from 'http-status'
-import pick from 'utils/pick'
-import ApiError from 'utils/ApiError'
+import pick from 'base/utils/pick'
+import ApiError from 'base/utils/ApiError'
 import { NextFunction, Request, Response } from 'express'
 import Joi from 'joi'
 

@@ -1,8 +1,6 @@
 
 
 lintstged add test after test are finished
-typecript / check other library
-
 setup cors
 
 change readme icons
@@ -17,12 +15,7 @@ add user to words
 
 make sure tests work with tyepscript
 
-airbnbbase overrides prettier
-      "@typescript-eslint/indent": "off",
-        "@typescript-eslint/semi": "off",
-        "@typescript-eslint/comma-dangle": "off" remove?
+check if custom.validation is still working
+check if i can fix all the any's
 
-
-        add: 
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
+     "paths": {"base/*": ["./*"]}, 

@@ -4,12 +4,14 @@ import httpStatus from 'http-status'
 import app from '../../src/app'
 import setupTestDB from '../utils/setupTestDB'
 import insertWords, { wordOne, wordTwo } from '../fixtures/word.fixture'
+import { WordType } from 'types/words'
+import Word from 'models/word.model'
 
 setupTestDB()
 
 describe('Words routes', () => {
     describe('POST /v1/words', () => {
-        let newWord
+        let newWord: WordType
 
         beforeEach(() => {
             newWord = {

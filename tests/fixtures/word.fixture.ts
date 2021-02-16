@@ -1,23 +1,24 @@
 import mongoose from 'mongoose'
 
 import faker from 'faker'
-import Word from '../../src/models/word.model'
+import Word from 'base/models/word.model'
+import { MongooseWordType, MongooseWordsType } from 'base/types/words'
 
-export const wordOne = {
+export const wordOne: MongooseWordType = {
     _id: mongoose.Types.ObjectId(),
     word: faker.random.word(),
     reading: faker.random.word(),
     meaning: faker.random.word(),
 }
 
-export const wordTwo = {
+export const wordTwo: MongooseWordType = {
     _id: mongoose.Types.ObjectId(),
     word: faker.random.word(),
     reading: faker.random.word(),
     meaning: faker.random.word(),
 }
 
-const insertWords = async (words) => {
+const insertWords = async (words: MongooseWordsType) => {
     await Word.insertMany(words.map((word) => ({ ...word })))
 }
 

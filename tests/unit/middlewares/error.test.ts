@@ -132,7 +132,7 @@ describe('Error middlewares', () => {
 
     describe('Error handler', () => {
         beforeEach(() => {
-            jest.spyOn(logger, 'error').mockImplementation(() => {})
+            jest.spyOn(logger, 'error').mockImplementation(() => ({} as any))
         })
 
         test('should send proper error response and put the error message in res.locals', () => {

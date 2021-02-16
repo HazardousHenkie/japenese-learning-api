@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 import { Server } from 'http'
 import app from './app'
-import config from 'config/config'
-import logger from 'config/logger'
+import config from 'base/config/config'
+import logger from 'base/config/logger'
 
 let server: Server
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
@@ -16,6 +16,7 @@ const exitHandler = () => {
     if (server) {
         server.close(() => {
             logger.info('Server closed')
+
             process.exit(1)
         })
     } else {

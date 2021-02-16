@@ -1,13 +1,13 @@
 {
     "name": "japanese-learning-api",
     "version": "0.0.1",
-    "main": "src/index.js",
+    "license": "MIT",
     "engines": {
         "node": ">=12.0.0"
     },
     "scripts": {
         "start": "pm2 start ecosystem.config.json --no-daemon",
-        "dev": "cross-env NODE_ENV=development nodemon -x ts-node src/index.js",
+        "dev": "cross-env NODE_ENV=development nodemon --config nodemon.json",
         "build": "tsc --p ./",
         "test": "jest -i",
         "test:watch": "jest -i --watchAll",
@@ -16,6 +16,7 @@
         "lint:fix": "eslint . --fix",
         "prettier": "prettier --check '**/*.{ts,js}'",
         "prettier:fix": "prettier --write '**/*.{ts,js}'",
+        "typecheck": "tsc",
         "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up",
         "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
         "docker:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up"
@@ -55,7 +56,6 @@
         "@typescript-eslint/parser": "^4.15.0",
         "coveralls": "^3.0.7",
         "eslint": "^7.0.0",
-        "eslint-config-airbnb-typescript": "^12.3.1",
         "eslint-config-prettier": "^7.1.0",
         "eslint-plugin-import": "^2.22.1",
         "eslint-plugin-jest": "^24.0.1",
@@ -71,6 +71,7 @@
         "prettier": "^2.0.5",
         "supertest": "^6.0.1",
         "ts-node": "^9.1.1",
+        "tsconfig-paths": "^3.9.0",
         "typescript": "^4.1.5"
     }
 }

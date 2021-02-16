@@ -1,7 +1,7 @@
-import wordsController from 'controllers/words.controller'
+import wordsController from 'base/controllers/words.controller'
 import express from 'express'
-import validate from 'middlewares/validate'
-import wordsValidation from 'validations/words.validation'
+import validate from 'base/middlewares/validate'
+import wordsValidation from 'base/validations/words.validation'
 
 const router = express.Router()
 

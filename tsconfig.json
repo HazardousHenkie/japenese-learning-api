@@ -7,9 +7,11 @@
         "forceConsistentCasingInFileNames": true,
         "sourceMap": false,
         "baseUrl": "src",
+        "paths": { "base/*": ["./*"] },
         "noEmit": true,
         "moduleResolution": "node",
-        "pretty": true
+        "pretty": true,
+        "resolveJsonModule": true
     },
     "exclude": ["node_modules"]
 }
