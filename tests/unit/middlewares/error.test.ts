@@ -23,8 +23,8 @@ describe('Error middlewares', () => {
         })
 
         test('should convert an Error to ApiError and preserve its status and message', () => {
-            const error: ApiError = new Error('Any error')
-            error.statusCode = httpStatus.BAD_REQUEST
+            const error = new Error('Any error')
+            ;(error as ApiError).statusCode = httpStatus.BAD_REQUEST
             const next = jest.fn()
 
             errorConverter(
@@ -37,7 +37,7 @@ describe('Error middlewares', () => {
             expect(next).toHaveBeenCalledWith(expect.any(ApiError))
             expect(next).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    statusCode: error.statusCode,
+                    statusCode: (error as ApiError).statusCode,
                     message: error.message,
                     isOperational: false,
                 })
@@ -67,7 +67,7 @@ describe('Error middlewares', () => {
 
         test('should convert an Error without message to ApiError with default message of that http status', () => {
             const error = new Error()
-            error.statusCode = httpStatus.BAD_REQUEST
+            ;(error as ApiError).statusCode = httpStatus.BAD_REQUEST
             const next = jest.fn()
 
             errorConverter(
@@ -80,8 +80,8 @@ describe('Error middlewares', () => {
             expect(next).toHaveBeenCalledWith(expect.any(ApiError))
             expect(next).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    statusCode: error.statusCode,
-                    message: httpStatus[error.statusCode],
+                    statusCode: (error as ApiError).statusCode,
+                    message: httpStatus[(error as ApiError).statusCode],
                     isOperational: false,
                 })
             )
@@ -113,7 +113,7 @@ describe('Error middlewares', () => {
             const next = jest.fn()
 
             errorConverter(
-                error,
+                error as ApiError,
                 httpMocks.createRequest(),
                 httpMocks.createResponse(),
                 next

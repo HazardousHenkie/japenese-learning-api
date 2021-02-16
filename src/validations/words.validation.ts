@@ -12,7 +12,6 @@ const createWord = {
 const getWords = {
     query: Joi.object().keys({
         word: Joi.string(),
-        sortBy: Joi.string(),
     }),
 }
 

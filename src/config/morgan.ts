@@ -1,8 +1,12 @@
+import { Request, Response } from 'express'
 import morgan from 'morgan'
 import config from './config'
 import logger from './logger'
 
-morgan.token('message', (req, res) => res.locals.errorMessage || '')
+morgan.token(
+    'message',
+    (req: Request, res: Response) => res.locals.errorMessage || ''
+)
 
 const getIpFormat = () => (config.env === 'production' ? ':remote-addr - ' : '')
 const successResponseFormat = `${getIpFormat()}:method :url :status - :response-time ms`
