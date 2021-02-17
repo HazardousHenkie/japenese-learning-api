@@ -1,15 +1,13 @@
-FROM node:alpine
+FROM node:12.16
 
-RUN mkdir -p /usr/src/app && chown -R node:node /usr/src/app
+WORKDIR /app
 
-WORKDIR /usr/src/app
+COPY package.json ./
 
-COPY package.json yarn.lock ./
+RUN apt-get update
 
-USER node
+RUN yarn install
 
-RUN yarn install --pure-lockfile
-
-COPY --chown=node:node . .
+COPY . /app
 
 EXPOSE 3000
