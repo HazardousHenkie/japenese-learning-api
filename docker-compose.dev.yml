@@ -2,4 +2,4 @@ version: '3'
 services:
   node-app:
     container_name: japanese-learner-api-dev
-    command: yarn dev -L
+    command: yarn dev

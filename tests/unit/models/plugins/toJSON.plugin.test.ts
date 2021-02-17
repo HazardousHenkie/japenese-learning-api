@@ -1,4 +1,4 @@
-import toJSON from 'models/plugins/toJSON.plugin'
+import toJSON from 'base/models/plugins/toJSON.plugin'
 import mongoose from 'mongoose'
 
 describe('toJSON plugin', () => {

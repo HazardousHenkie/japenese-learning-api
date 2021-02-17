@@ -1,21 +1,42 @@
 
 
-lintstged add test after test are finished
+
 setup cors
 
 change readme icons
 put online
 
 check automatic swagger generation // fix swager comments
-check tests
-add typescript checker in commands
+
 
 add authenticaiton
 add user to words
 
-make sure tests work with tyepscript
 
 check if custom.validation is still working
-check if i can fix all the any's
+check hot reloading...? 
 
-     "paths": {"base/*": ["./*"]}, 
+{
+    "restartable": "rs",
+    "ignore": [".git", "node_modules", "coverage"],
+    "watch": ["./src/"],
+    "exec": "ts-node -r tsconfig-paths/register src/index.ts",
+    "env": {
+        "NODE_ENV": "development"
+    },
+    "ext": "js,json,ts"
+}
+
+{
+    "restartable": "rs",
+    "ignore": [".git", "node_modules", "coverage"],
+    "watch": ["src"],
+    "ext": "ts",
+    "env": {
+        "NODE_ENV": "development"
+    },
+    "execMap": {
+        "ts": "node -r tsconfig-paths/register -r ts-node/register"
+    }
+}
+
