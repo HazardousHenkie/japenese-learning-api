@@ -15,28 +15,4 @@ add user to words
 
 check if custom.validation is still working
 check hot reloading...? 
-
-{
-    "restartable": "rs",
-    "ignore": [".git", "node_modules", "coverage"],
-    "watch": ["./src/"],
-    "exec": "ts-node -r tsconfig-paths/register src/index.ts",
-    "env": {
-        "NODE_ENV": "development"
-    },
-    "ext": "js,json,ts"
-}
-
-{
-    "restartable": "rs",
-    "ignore": [".git", "node_modules", "coverage"],
-    "watch": ["src"],
-    "ext": "ts",
-    "env": {
-        "NODE_ENV": "development"
-    },
-    "execMap": {
-        "ts": "node -r tsconfig-paths/register -r ts-node/register"
-    }
-}
-
+//https://auth0.com/blog/use-typescript-to-create-a-secure-api-with-nodejs-and-express-adding-authentication-authorization/

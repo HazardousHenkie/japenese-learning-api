@@ -18,13 +18,43 @@ const { value: envVars, error } = envVarsSchema
     .prefs({ errors: { label: 'key' } })
     .validate(process.env)
 
+const audience = process.env.AUTH0_AUDIENCE
+const domain = process.env.AUTH0_DOMAIN
+const clientOriginUrl = process.env.CLIENT_ORIGIN_URL
+
 if (error) {
     throw new Error(`Config validation error: ${error.message}`)
 }
 
+if (!audience) {
+    throw new Error(
+        '.env is missing the definition of an AUTH0_AUDIENCE environmental variable'
+    )
+}
+
+if (!domain) {
+    throw new Error(
+        '.env is missing the definition of an AUTH0_DOMAIN environmental variable'
+    )
+}
+
+if (!clientOriginUrl) {
+    throw new Error(
+        '.env is missing the definition of a APP_ORIGIN environmental variable'
+    )
+}
+
+const clientOrigins = ['http://localhost:8080']
+
 export default {
     env: envVars.NODE_ENV,
     port: envVars.PORT,
+    auth0: {
+        audience,
+        domain,
+        clientOriginUrl,
+        clientOrigins,
+    },
     mongoose: {
         url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),
         options: {
