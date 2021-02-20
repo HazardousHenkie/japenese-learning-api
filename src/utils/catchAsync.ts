@@ -1,7 +1,8 @@
-import { Request, Response, NextFunction, RequestHandler } from 'express'
+import { UserRequest } from 'base/types/words'
+import { Response, NextFunction, RequestHandler } from 'express'
 
 const catchAsync = (fn: RequestHandler) => (
-    req: Request,
+    req: UserRequest,
     res: Response,
     next: NextFunction
 ) => {

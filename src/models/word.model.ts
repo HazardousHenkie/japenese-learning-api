@@ -1,3 +1,4 @@
+import { WordDoc } from 'base/types/words'
 import mongoose from 'mongoose'
 import toJSON from './plugins/toJSON.plugin'
 
@@ -18,6 +19,10 @@ const wordSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
+        userId: {
+            type: String,
+            required: true,
+        },
     },
     {
         timestamps: true,
@@ -26,6 +31,6 @@ const wordSchema = new mongoose.Schema(
 
 wordSchema.plugin(toJSON)
 
-const Word = mongoose.model('Word', wordSchema)
+const Word = mongoose.model<WordDoc>('Word', wordSchema)
 
 export default Word

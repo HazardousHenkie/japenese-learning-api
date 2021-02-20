@@ -12,7 +12,7 @@ router
         validate(wordsValidation.createWord),
         wordsController.createWord
     )
-    .get(auth, validate(wordsValidation.createWord), wordsController.getWords)
+    .get(auth, validate(wordsValidation.getWords), wordsController.getWords)
 
 router
     .route('/:wordId')

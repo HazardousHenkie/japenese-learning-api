@@ -1,8 +1,9 @@
 import httpStatus from 'http-status'
 import pick from 'base/utils/pick'
 import ApiError from 'base/utils/ApiError'
-import { NextFunction, Request, Response } from 'express'
+import { NextFunction, Response } from 'express'
 import Joi from 'joi'
+import { UserRequest } from 'base/types/words'
 
 type Schema = {
     params?: Joi.ObjectSchema<any>
@@ -11,7 +12,7 @@ type Schema = {
 }
 
 const validate = (schema: Schema) => (
-    req: Request,
+    req: UserRequest,
     res: Response,
     next: NextFunction
 ) => {

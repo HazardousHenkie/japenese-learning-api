@@ -3,11 +3,12 @@ import httpStatus from 'http-status'
 import config from 'base/config/config'
 import logger from 'base/config/logger'
 import ApiError from 'base/utils/ApiError'
-import { Request, Response, NextFunction } from 'express'
+import { Response, NextFunction } from 'express'
+import { UserRequest } from 'base/types/words'
 
 export const errorConverter = (
     err: ApiError | Error,
-    req: Request,
+    req: UserRequest,
     res: Response,
     next: NextFunction
 ) => {
@@ -26,7 +27,7 @@ export const errorConverter = (
 
 export const errorHandler = (
     err: ApiError,
-    req: Request,
+    req: UserRequest,
     res: Response,
     next?: NextFunction
 ) => {

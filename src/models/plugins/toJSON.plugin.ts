@@ -31,6 +31,7 @@ const toJSON = (schema: any) => {
             })
 
             ret.id = ret._id.toString()
+            delete ret.userId
             delete ret._id
             delete ret.__v
             delete ret.createdAt
