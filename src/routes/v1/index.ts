@@ -3,11 +3,8 @@ import express from 'express'
 import wordRoute from './words.route'
 import docsRoute from './docs.route'
 import config from 'base/config/config'
-import auth from 'base/middlewares/validate'
 
 const router = express.Router()
-
-router.use(auth)
 
 const defaultRoutes = [
     {
