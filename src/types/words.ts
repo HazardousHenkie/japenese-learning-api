@@ -3,7 +3,6 @@ import { Request } from 'express'
 
 export type MongooseWordType = {
     _id: mongoose.Types.ObjectId
-    userId: string
     word: string
     reading: string
     meaning: string
