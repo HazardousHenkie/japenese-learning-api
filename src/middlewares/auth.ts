@@ -14,6 +14,4 @@ const checkJwt = jwt({
     algorithms: ['RS256'],
 })
 
-console.log('checking', checkJwt)
-
 export default checkJwt

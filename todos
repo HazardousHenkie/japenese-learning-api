@@ -13,3 +13,7 @@ check automatic swagger generation // fix swager comments
 add user to words
 
 
+// add authorization other use test
+// add word/userid filter check in combination
+// check word 
+// add ci?

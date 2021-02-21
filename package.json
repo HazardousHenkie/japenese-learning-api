@@ -14,7 +14,8 @@
         "lint:fix": "eslint . --fix",
         "prettier": "prettier --check '**/*.{ts,js}'",
         "prettier:fix": "prettier --write '**/*.{ts,js}'",
-        "typecheck": "tsc",
+        "typecheck": "tsc --noemit",
+        "build": "tsc -p tsconfig.production.json",
         "docker:db": "docker-compose -f docker-compose.yml up"
     },
     "dependencies": {

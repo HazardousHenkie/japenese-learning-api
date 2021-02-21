@@ -14,7 +14,11 @@ const createWord = catchAsync(async (req: UserRequest, res: Response) => {
 
 const getWords = catchAsync(async (req: UserRequest, res: Response) => {
     const filter = pick(req.query, ['word'])
-    const words = await wordService.queryWords(filter)
+
+    const words = await wordService.queryWords({
+        ...filter,
+        userId: req.user?.sub,
+    })
 
     res.send({
         results: words,
