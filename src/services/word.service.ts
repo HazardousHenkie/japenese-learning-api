@@ -18,10 +18,16 @@ const getWordById = async (id: string) => {
     return Word.findById(id)
 }
 
-const updateWordById = async (wordId: string, updateBody: Body) => {
+const updateWordById = async (
+    wordId: string,
+    updateBody: Body,
+    userId: string | undefined
+) => {
     const word = await getWordById(wordId)
     if (!word) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Word not found')
+    } else if (userId !== word.userId) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized')
     }
 
     Object.assign(word, updateBody)
@@ -29,10 +35,12 @@ const updateWordById = async (wordId: string, updateBody: Body) => {
     return word
 }
 
-const deleteWordById = async (wordId: string) => {
+const deleteWordById = async (wordId: string, userId: string | undefined) => {
     const word = await getWordById(wordId)
     if (!word) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Word not found')
+    } else if (userId !== word.userId) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized')
     }
     await word.remove()
     return word

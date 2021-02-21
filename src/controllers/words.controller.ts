@@ -25,24 +25,29 @@ const getWord = catchAsync(async (req: UserRequest, res: Response) => {
     const word = await wordService.getWordById(req.params.wordId)
     if (!word) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Word not found')
+    } else if (req.user?.sub !== word.userId) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized')
     }
-
-    // console.log(word.userId)
-    // TODO: add current user check to all
-    // else if (req.user?.sub !== word.userId) {
-    //     throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized')
-    // }
 
     res.send(word)
 })
 
 const updateWord = catchAsync(async (req: UserRequest, res: Response) => {
-    const word = await wordService.updateWordById(req.params.wordId, req.body)
+    const word = await wordService.updateWordById(
+        req.params.wordId,
+        req.body,
+        req.user?.sub
+    )
+
+    if (req.user?.sub !== word.userId) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized')
+    }
+
     res.send(word)
 })
 
 const deleteWord = catchAsync(async (req: UserRequest, res: Response) => {
-    await wordService.deleteWordById(req.params.wordId)
+    await wordService.deleteWordById(req.params.wordId, req.user?.sub)
     res.status(httpStatus.NO_CONTENT).send()
 })
 
