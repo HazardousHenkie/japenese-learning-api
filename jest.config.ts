@@ -9,7 +9,9 @@ export default {
         'src/config',
         'src/app.ts',
         'tests',
+        'dist',
     ],
+    modulePathIgnorePatterns: ['<rootDir>/dist/'],
     coverageReporters: ['text', 'lcov', 'clover', 'html'],
     transform: {
         '^.+\\.(ts|tsx)$': 'ts-jest',
