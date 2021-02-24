@@ -1,5 +1,5 @@
-import config from 'base/config/config'
 import mongoose from 'mongoose'
+import config from '../../src/config/config'
 
 const setupTestDB = () => {
     beforeAll(async () => {

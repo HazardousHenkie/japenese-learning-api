@@ -1,6 +1,6 @@
 import jwt from 'express-jwt'
 import jwksRsa from 'jwks-rsa'
-import config from 'base/config/config'
+import config from '../config/config'
 
 const checkJwt = jwt({
     secret: jwksRsa.expressJwtSecret({

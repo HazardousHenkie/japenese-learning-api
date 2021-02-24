@@ -1,7 +1,7 @@
 import httpStatus from 'http-status'
-import Word from 'base/models/word.model'
+import Word from '../models/word.model'
 import { FilterQuery } from 'mongoose'
-import ApiError from 'base/utils/ApiError'
+import ApiError from '../utils/ApiError'
 
 const createWord = async (wordBody: Body) => {
     const word = await Word.create(wordBody)

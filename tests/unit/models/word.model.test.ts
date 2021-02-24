@@ -1,6 +1,6 @@
 import faker from 'faker'
-import Word from 'base/models/word.model'
-import { WordType } from 'base/types/words'
+import Word from '../../../src/models/word.model'
+import { WordType } from '../../../src/types/words'
 
 describe('Word model', () => {
     describe('Word validation', () => {

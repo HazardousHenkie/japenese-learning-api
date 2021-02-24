@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 
 import faker from 'faker'
-import Word from 'base/models/word.model'
-import { MongooseWordType, MongooseWordsType } from 'base/types/words'
+import { MongooseWordsType, MongooseWordType } from '../../src/types/words'
+import Word from '../../src/models/word.model'
 
 export const wordOne: MongooseWordType = {
     _id: mongoose.Types.ObjectId(),

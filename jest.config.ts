@@ -16,7 +16,4 @@ export default {
     transform: {
         '^.+\\.(ts|tsx)$': 'ts-jest',
     },
-    moduleNameMapper: {
-        'base/(.*)': '<rootDir>/src/$1',
-    },
 }
