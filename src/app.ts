@@ -34,11 +34,16 @@ app.use(mongoSanitize())
 // gzip compression
 app.use(compression())
 
-// enable cors
-app.use(cors({ origin: config.auth0.clientOrigins }))
+const corsOptions: cors.CorsOptions = {
+    methods: 'GET,OPTIONS,PATCH,POST,DELETE',
+    origin: config.auth0.clientOrigins,
+    preflightContinue: false,
+}
 
-// TODO: fix cors
-app.options('*', cors({ origin: config.auth0.clientOrigins }) as any)
+// enable cors
+app.use(cors(corsOptions))
+
+app.options('*', cors(corsOptions) as any)
 
 // v1 api routes
 app.use('/v1', routes)

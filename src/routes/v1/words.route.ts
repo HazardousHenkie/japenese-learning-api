@@ -74,10 +74,8 @@ export default router
  *            application/json:
  *              schema:
  *                 $ref: '#/components/schemas/Word'
- *        "401":
- *          $ref: '#/components/responses/Unauthorized'
- *        "403":
- *          $ref: '#/components/responses/Forbidden'
+ *        "500":
+ *          $ref: '#/components/responses/Error'
  *
  *    get:
  *      summary: Get all words
@@ -90,18 +88,6 @@ export default router
  *          schema:
  *            type: string
  *          description: Word
- *        - in: query
- *          name: sortBy
- *          schema:
- *            type: string
- *          description: sort by query in the form of field:desc/asc (ex. name:asc)
- *        - in: query
- *          name: limit
- *          schema:
- *            type: integer
- *            minimum: 1
- *          default: 10
- *          description: Maximum number of words
  *      responses:
  *        "200":
  *          description: OK
@@ -114,10 +100,8 @@ export default router
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/Word'
- *        "401":
- *          $ref: '#/components/responses/Unauthorized'
- *        "403":
- *          $ref: '#/components/responses/Forbidden'
+ *        "500":
+ *          $ref: '#/components/responses/Error'
  */
 
 /**
@@ -145,8 +129,8 @@ export default router
  *                 $ref: '#/components/schemas/Word'
  *        "401":
  *          $ref: '#/components/responses/Unauthorized'
- *        "403":
- *          $ref: '#/components/responses/Forbidden'
+ *        "500":
+ *          $ref: '#/components/responses/Error'
  *        "404":
  *          $ref: '#/components/responses/NotFound'
  *
@@ -188,8 +172,8 @@ export default router
  *                 $ref: '#/components/schemas/Word'
  *        "401":
  *          $ref: '#/components/responses/Unauthorized'
- *        "403":
- *          $ref: '#/components/responses/Forbidden'
+ *        "500":
+ *          $ref: '#/components/responses/Error'
  *        "404":
  *          $ref: '#/components/responses/NotFound'
  *
@@ -210,8 +194,8 @@ export default router
  *          description: No content
  *        "401":
  *          $ref: '#/components/responses/Unauthorized'
- *        "403":
- *          $ref: '#/components/responses/Forbidden'
+ *        "500":
+ *          $ref: '#/components/responses/Error'
  *        "404":
  *          $ref: '#/components/responses/NotFound'
  */

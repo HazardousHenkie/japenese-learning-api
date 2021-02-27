@@ -1,3 +1,4 @@
+import { AnyAaaaRecord } from 'dns'
 import { Document, SchemaOptions, ToObjectOptions } from 'mongoose'
 
 const deleteAtPath = (
