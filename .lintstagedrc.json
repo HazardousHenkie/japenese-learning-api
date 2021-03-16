@@ -1,3 +1,11 @@
+
 {
-  "*.js": "eslint"
+  "*.{ts,js}": [
+    "yarn lint:fix",
+    "git add --force"
+  ],
+  "*.{ts,js,json,md}": [
+    "yarn prettier:fix",
+    "git add --force"
+  ]
 }
