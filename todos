@@ -1,16 +1,16 @@
 //docs
-// swagger
 
-ecosystem
-docker
+
 
 lintstged add test after test are finished
 typecript / check other library
 
 setup cors
-setup config mongodb 
-check packages
-limiter
-change readme icons
 
-check automatic swagger generation
+change readme icons
+put online
+
+
+check tests
+add authenticaiton
+add user to words

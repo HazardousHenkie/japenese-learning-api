@@ -1,39 +1,39 @@
 const express = require('express')
 
 const validate = require('../../middlewares/validate')
-const userValidation = require('../../validations/user.validation')
-const userController = require('../../controllers/user.controller')
+const wordValidation = require('../../validations/words.validation')
+const wordController = require('../../controllers/words.controller')
 
 const router = express.Router()
 
 router
     .route('/')
-    .post(validate(userValidation.createUser), userController.createUser)
-    .get(validate(userValidation.getUsers), userController.getUsers)
+    .post(validate(wordValidation.createWord), wordController.createWord)
+    .get(validate(wordValidation.getWords), wordController.getWords)
 
 router
-    .route('/:userId')
-    .get(validate(userValidation.getUser), userController.getUser)
-    .patch(validate(userValidation.updateUser), userController.updateUser)
-    .delete(validate(userValidation.deleteUser), userController.deleteUser)
+    .route('/:wordId')
+    .get(validate(wordValidation.getWord), wordController.getWord)
+    .patch(validate(wordValidation.updateWord), wordController.updateWord)
+    .delete(validate(wordValidation.deleteWord), wordController.deleteWord)
 
 module.exports = router
 
 /**
  * @swagger
  * tags:
- *   name: Users
- *   description: User management and retrieval
+ *   name: Words
+ *   description: Word management and retrieval
  */
 
 /**
  * @swagger
  * path:
- *  /users:
+ *  /words:
  *    post:
- *      summary: Create a user
- *      description: Only admins can create other users.
- *      tags: [Users]
+ *      summary: Create a word
+ *      description: Only admins can create other words.
+ *      tags: [Words]
  *      security:
  *        - bearerAuth: []
  *      requestBody:
@@ -61,19 +61,19 @@ module.exports = router
  *                  description: At least one number and one letter
  *                role:
  *                   type: string
- *                   enum: [user, admin]
+ *                   enum: [word, admin]
  *              example:
  *                name: fake name
  *                email: fake@example.com
  *                password: password1
- *                role: user
+ *                role: word
  *      responses:
  *        "201":
  *          description: Created
  *          content:
  *            application/json:
  *              schema:
- *                 $ref: '#/components/schemas/User'
+ *                 $ref: '#/components/schemas/Word'
  *        "400":
  *          $ref: '#/components/responses/DuplicateEmail'
  *        "401":
@@ -82,9 +82,9 @@ module.exports = router
  *          $ref: '#/components/responses/Forbidden'
  *
  *    get:
- *      summary: Get all users
- *      description: Only admins can retrieve all users.
- *      tags: [Users]
+ *      summary: Get all words
+ *      description: Only admins can retrieve all words.
+ *      tags: [Words]
  *      security:
  *        - bearerAuth: []
  *      parameters:
@@ -92,12 +92,12 @@ module.exports = router
  *          name: name
  *          schema:
  *            type: string
- *          description: User name
+ *          description: Word name
  *        - in: query
  *          name: role
  *          schema:
  *            type: string
- *          description: User role
+ *          description: Word role
  *        - in: query
  *          name: sortBy
  *          schema:
@@ -109,14 +109,7 @@ module.exports = router
  *            type: integer
  *            minimum: 1
  *          default: 10
- *          description: Maximum number of users
- *        - in: query
- *          name: page
- *          schema:
- *            type: integer
- *            minimum: 1
- *            default: 1
- *          description: Page number
+ *          description: Maximum number of words
  *      responses:
  *        "200":
  *          description: OK
@@ -128,19 +121,7 @@ module.exports = router
  *                  results:
  *                    type: array
  *                    items:
- *                      $ref: '#/components/schemas/User'
- *                  page:
- *                    type: integer
- *                    example: 1
- *                  limit:
- *                    type: integer
- *                    example: 10
- *                  totalPages:
- *                    type: integer
- *                    example: 1
- *                  totalResults:
- *                    type: integer
- *                    example: 1
+ *                      $ref: '#/components/schemas/Word'
  *        "401":
  *          $ref: '#/components/responses/Unauthorized'
  *        "403":
@@ -150,11 +131,11 @@ module.exports = router
 /**
  * @swagger
  * path:
- *  /users/{id}:
+ *  /words/{id}:
  *    get:
- *      summary: Get a user
- *      description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *      tags: [Users]
+ *      summary: Get a word
+ *      description: Logged in words can fetch only their own word information. Only admins can fetch other words.
+ *      tags: [Words]
  *      security:
  *        - bearerAuth: []
  *      parameters:
@@ -163,14 +144,14 @@ module.exports = router
  *          required: true
  *          schema:
  *            type: string
- *          description: User id
+ *          description: Word id
  *      responses:
  *        "200":
  *          description: OK
  *          content:
  *            application/json:
  *              schema:
- *                 $ref: '#/components/schemas/User'
+ *                 $ref: '#/components/schemas/Word'
  *        "401":
  *          $ref: '#/components/responses/Unauthorized'
  *        "403":
@@ -179,9 +160,9 @@ module.exports = router
  *          $ref: '#/components/responses/NotFound'
  *
  *    patch:
- *      summary: Update a user
- *      description: Logged in users can only update their own information. Only admins can update other users.
- *      tags: [Users]
+ *      summary: Update a word
+ *      description: Logged in words can only update their own information. Only admins can update other words.
+ *      tags: [Words]
  *      security:
  *        - bearerAuth: []
  *      parameters:
@@ -190,7 +171,7 @@ module.exports = router
  *          required: true
  *          schema:
  *            type: string
- *          description: User id
+ *          description: Word id
  *      requestBody:
  *        required: true
  *        content:
@@ -219,7 +200,7 @@ module.exports = router
  *          content:
  *            application/json:
  *              schema:
- *                 $ref: '#/components/schemas/User'
+ *                 $ref: '#/components/schemas/Word'
  *        "400":
  *          $ref: '#/components/responses/DuplicateEmail'
  *        "401":
@@ -230,9 +211,9 @@ module.exports = router
  *          $ref: '#/components/responses/NotFound'
  *
  *    delete:
- *      summary: Delete a user
- *      description: Logged in users can delete only themselves. Only admins can delete other users.
- *      tags: [Users]
+ *      summary: Delete a word
+ *      description: Logged in words can delete only themselves. Only admins can delete other words.
+ *      tags: [Words]
  *      security:
  *        - bearerAuth: []
  *      parameters:
@@ -241,7 +222,7 @@ module.exports = router
  *          required: true
  *          schema:
  *            type: string
- *          description: User id
+ *          description: Word id
  *      responses:
  *        "200":
  *          description: No content
