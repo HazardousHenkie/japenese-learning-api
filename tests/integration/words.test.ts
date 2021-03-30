@@ -1,10 +1,9 @@
-const request = require('supertest')
-const faker = require('faker')
-const httpStatus = require('http-status')
-const app = require('../../src/app')
-const setupTestDB = require('../utils/setupTestDB')
-const { Word } = require('../../src/models')
-const { wordOne, wordTwo, insertWords } = require('../fixtures/word.fixture')
+import request from 'supertest'
+import faker from 'faker'
+import httpStatus from 'http-status'
+import app from '../../src/app'
+import setupTestDB from '../utils/setupTestDB'
+import insertWords, { wordOne, wordTwo } from '../fixtures/word.fixture'
 
 setupTestDB()
 

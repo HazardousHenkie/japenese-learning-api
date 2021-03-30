@@ -140,7 +140,7 @@ The app has a centralized error handling mechanism.
 Controllers should try to catch the errors and forward them to the error handling middleware (by calling `next(error)`). For convenience, you can also wrap the controller inside the catchAsync utility wrapper, which forwards the error.
 
 ```javascript
-const catchAsync = require('../utils/catchAsync')
+const catchAsync from '../utils/catchAsync')
 
 const controller = catchAsync(async (req, res) => {
     // this error will be forwarded to the error handling middleware
@@ -164,9 +164,9 @@ The app has a utility ApiError class to which you can attach a response code and
 For example, if you are trying to get a word from the DB who is not found, and you want to send a 404 error, the code should look something like:
 
 ```javascript
-const httpStatus = require('http-status')
-const ApiError = require('../utils/ApiError')
-const Word = require('../models/Word')
+const httpStatus from 'http-status')
+const ApiError from '../utils/ApiError')
+const Word from '../models/Word')
 
 const getWord = async (wordId) => {
     const word = await Word.findById(wordId)
@@ -183,10 +183,10 @@ Request data is validated using [Joi](https://joi.dev/). Check the [documentatio
 The validation schemas are defined in the `src/validations` directory and are used in the routes by providing them as parameters to the `validate` middleware.
 
 ```javascript
-const express = require('express')
-const validate = require('../../middlewares/validate')
-const wordValidation = require('../../validations/word.validation')
-const wordController = require('../../controllers/word.controller')
+const express from 'express')
+const validate from '../../middlewares/validate')
+const wordValidation from '../../validations/word.validation')
+const wordController from '../../controllers/word.controller')
 
 const router = express.Router()
 
@@ -204,7 +204,7 @@ Import the logger from `src/config/logger.js`. It is using the [Winston](https:/
 Logging should be done according to the following severity levels (ascending order from most important to least important):
 
 ```javascript
-const logger = require('<path to src>/config/logger')
+const logger from '<path to src>/config/logger')
 
 logger.error('message') // level 0
 logger.warn('message') // level 1
@@ -227,8 +227,8 @@ Note: API request information (request url, response code, timestamp, etc.) are 
 The app also contains 1 custom mongoose plugins that you can attach to any mongoose model schema. You can find the plugins in `src/models/plugins`.
 
 ```javascript
-const mongoose = require('mongoose')
-const { toJSON } = require('./plugins')
+const mongoose from 'mongoose')
+const { toJSON } from './plugins')
 
 const wordSchema = mongoose.Schema(
     {

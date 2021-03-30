@@ -1,9 +1,20 @@
-const Joi = require('joi')
-const httpStatus = require('http-status')
-const pick = require('../utils/pick')
-const ApiError = require('../utils/ApiError')
+import httpStatus from 'http-status'
+import pick from 'utils/pick'
+import ApiError from 'utils/ApiError'
+import { NextFunction, Request, Response } from 'express'
+import Joi from 'joi'
 
-const validate = (schema) => (req, res, next) => {
+type Schema = {
+    params?: Joi.ObjectSchema<any>
+    body?: Joi.ObjectSchema<any>
+    query?: Joi.ObjectSchema<any>
+}
+
+const validate = (schema: Schema) => (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     const validSchema = pick(schema, ['params', 'query', 'body'])
     const object = pick(req, Object.keys(validSchema))
     const { value, error } = Joi.compile(validSchema)
@@ -20,4 +31,4 @@ const validate = (schema) => (req, res, next) => {
     return next()
 }
 
-module.exports = validate
+export default validate

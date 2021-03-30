@@ -1,21 +1,22 @@
-const httpStatus = require('http-status')
-const pick = require('../utils/pick')
-const ApiError = require('../utils/ApiError')
-const catchAsync = require('../utils/catchAsync')
-const { wordService } = require('../services')
+import { Request, Response } from 'express'
+import httpStatus from 'http-status'
+import wordService from 'services/word.service'
+import ApiError from 'utils/ApiError'
+import catchAsync from 'utils/catchAsync'
+import pick from 'utils/pick'
 
-const createWord = catchAsync(async (req, res) => {
+const createWord = catchAsync(async (req: Request, res: Response) => {
     const word = await wordService.createWord(req.body)
     res.status(httpStatus.CREATED).send(word)
 })
 
-const getWords = catchAsync(async (req, res) => {
+const getWords = catchAsync(async (req: Request, res: Response) => {
     const filter = pick(req.query, ['word'])
     const result = await wordService.queryWords(filter)
     res.send({ results: result })
 })
 
-const getWord = catchAsync(async (req, res) => {
+const getWord = catchAsync(async (req: Request, res: Response) => {
     const word = await wordService.getWordById(req.params.wordId)
     if (!word) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Word not found')
@@ -23,17 +24,17 @@ const getWord = catchAsync(async (req, res) => {
     res.send(word)
 })
 
-const updateWord = catchAsync(async (req, res) => {
+const updateWord = catchAsync(async (req: Request, res: Response) => {
     const word = await wordService.updateWordById(req.params.wordId, req.body)
     res.send(word)
 })
 
-const deleteWord = catchAsync(async (req, res) => {
+const deleteWord = catchAsync(async (req: Request, res: Response) => {
     await wordService.deleteWordById(req.params.wordId)
     res.status(httpStatus.NO_CONTENT).send()
 })
 
-module.exports = {
+export default {
     createWord,
     getWords,
     getWord,

@@ -1,5 +1,3 @@
-//docs
-
 
 
 lintstged add test after test are finished
@@ -10,7 +8,21 @@ setup cors
 change readme icons
 put online
 
-
+check automatic swagger generation // fix swager comments
 check tests
+add typescript checker in commands
+
 add authenticaiton
 add user to words
+
+make sure tests work with tyepscript
+
+airbnbbase overrides prettier
+      "@typescript-eslint/indent": "off",
+        "@typescript-eslint/semi": "off",
+        "@typescript-eslint/comma-dangle": "off" remove?
+
+
+        add: 
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",

@@ -1,5 +1,5 @@
-const faker = require('faker')
-const { Word } = require('../../../src/models')
+import faker from 'faker'
+import Word from 'models/word.model'
 
 describe('Word model', () => {
     describe('Word validation', () => {

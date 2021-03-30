@@ -1,15 +1,15 @@
-const mongoose = require('mongoose')
-const { toJSON } = require('../../../../src/models/plugins')
+import toJSON from 'models/plugins/toJSON.plugin'
+import mongoose from 'mongoose'
 
 describe('toJSON plugin', () => {
-    let connection
+    let connection: mongoose.Connection
 
     beforeEach(() => {
         connection = mongoose.createConnection()
     })
 
     it('should replace _id with id', () => {
-        const schema = mongoose.Schema()
+        const schema = new mongoose.Schema()
         schema.plugin(toJSON)
         const Model = connection.model('Model', schema)
         const doc = new Model()
@@ -18,7 +18,7 @@ describe('toJSON plugin', () => {
     })
 
     it('should remove __v', () => {
-        const schema = mongoose.Schema()
+        const schema = new mongoose.Schema()
         schema.plugin(toJSON)
         const Model = connection.model('Model', schema)
         const doc = new Model()
@@ -26,7 +26,7 @@ describe('toJSON plugin', () => {
     })
 
     it('should remove createdAt and updatedAt', () => {
-        const schema = mongoose.Schema({}, { timestamps: true })
+        const schema = new mongoose.Schema({}, { timestamps: true })
         schema.plugin(toJSON)
         const Model = connection.model('Model', schema)
         const doc = new Model()
@@ -35,7 +35,7 @@ describe('toJSON plugin', () => {
     })
 
     it('should remove any path set as private', () => {
-        const schema = mongoose.Schema({
+        const schema = new mongoose.Schema({
             public: { type: String },
             private: { type: String, private: true },
         })
@@ -50,7 +50,7 @@ describe('toJSON plugin', () => {
     })
 
     it('should remove any nested paths set as private', () => {
-        const schema = mongoose.Schema({
+        const schema = new mongoose.Schema({
             public: { type: String },
             nested: {
                 private: { type: String, private: true },
@@ -69,7 +69,7 @@ describe('toJSON plugin', () => {
     })
 
     it('should also call the schema toJSON transform function', () => {
-        const schema = mongoose.Schema(
+        const schema = new mongoose.Schema(
             {
                 public: { type: String },
                 private: { type: String },
