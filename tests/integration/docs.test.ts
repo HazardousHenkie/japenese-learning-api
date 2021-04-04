@@ -1,7 +1,7 @@
 import request from 'supertest'
 import httpStatus from 'http-status'
-import app from '../../src/app'
-import config from '../../src/config/config'
+import app from 'base/app'
+import config from 'base/config/config'
 
 describe('Auth routes', () => {
     describe('GET /v1/docs', () => {

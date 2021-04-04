@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
 import httpStatus from 'http-status'
 import httpMocks from 'node-mocks-http'
-import ApiError from 'utils/ApiError'
-import { errorConverter, errorHandler } from 'middlewares/error'
-import config from 'config/config'
-import logger from 'config/logger'
+import ApiError from 'base/utils/ApiError'
+import { errorConverter, errorHandler } from 'base/middlewares/error'
+import config from 'base/config/config'
+import logger from 'base/config/logger'
 
 describe('Error middlewares', () => {
     describe('Error converter', () => {
@@ -132,7 +132,7 @@ describe('Error middlewares', () => {
 
     describe('Error handler', () => {
         beforeEach(() => {
-            jest.spyOn(logger, 'error').mockImplementation(() => {})
+            jest.spyOn(logger, 'error').mockImplementation(() => ({} as any))
         })
 
         test('should send proper error response and put the error message in res.locals', () => {

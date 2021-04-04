@@ -1,15 +1,17 @@
 import request from 'supertest'
 import faker from 'faker'
 import httpStatus from 'http-status'
-import app from '../../src/app'
+import app from 'base/app'
 import setupTestDB from '../utils/setupTestDB'
 import insertWords, { wordOne, wordTwo } from '../fixtures/word.fixture'
+import { WordType } from 'types/words'
+import Word from 'base/models/word.model'
 
 setupTestDB()
 
 describe('Words routes', () => {
     describe('POST /v1/words', () => {
-        let newWord
+        let newWord: WordType
 
         beforeEach(() => {
             newWord = {
@@ -124,6 +126,8 @@ describe('Words routes', () => {
                 meaning: wordOne.meaning,
             })
         })
+
+        // only get own words
 
         // test('should return 401 error if access token is missing', async () => {
         //     await insertWords([wordOne])

@@ -1,15 +1,17 @@
 {
     "compilerOptions": {
-        "target": "esnext",
-        "module": "esnext",
+        "target": "ES2018",
+        "module": "CommonJS",
         "strict": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "sourceMap": false,
         "baseUrl": "src",
+        "paths": { "base/*": ["./*"] },
         "noEmit": true,
         "moduleResolution": "node",
-        "pretty": true
+        "pretty": true,
+        "resolveJsonModule": true
     },
     "exclude": ["node_modules"]
 }

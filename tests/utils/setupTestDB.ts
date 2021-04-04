@@ -1,4 +1,4 @@
-import config from 'config/config'
+import config from 'base/config/config'
 import mongoose from 'mongoose'
 
 const setupTestDB = () => {

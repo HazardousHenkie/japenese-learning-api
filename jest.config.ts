@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     testEnvironment: 'node',
     testEnvironmentOptions: {
         NODE_ENV: 'test',
@@ -7,8 +7,14 @@ module.exports = {
     coveragePathIgnorePatterns: [
         'node_modules',
         'src/config',
-        'src/app.js',
+        'src/app.ts',
         'tests',
     ],
     coverageReporters: ['text', 'lcov', 'clover', 'html'],
+    transform: {
+        '^.+\\.(ts|tsx)$': 'ts-jest',
+    },
+    moduleNameMapper: {
+        'base/(.*)': '<rootDir>/src/$1',
+    },
 }

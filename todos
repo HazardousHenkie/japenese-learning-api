@@ -1,7 +1,5 @@
 
 
-lintstged add test after test are finished
-typecript / check other library
 
 setup cors
 
@@ -9,20 +7,36 @@ change readme icons
 put online
 
 check automatic swagger generation // fix swager comments
-check tests
-add typescript checker in commands
+
 
 add authenticaiton
 add user to words
 
-make sure tests work with tyepscript
 
-airbnbbase overrides prettier
-      "@typescript-eslint/indent": "off",
-        "@typescript-eslint/semi": "off",
-        "@typescript-eslint/comma-dangle": "off" remove?
+check if custom.validation is still working
+check hot reloading...? 
 
+{
+    "restartable": "rs",
+    "ignore": [".git", "node_modules", "coverage"],
+    "watch": ["./src/"],
+    "exec": "ts-node -r tsconfig-paths/register src/index.ts",
+    "env": {
+        "NODE_ENV": "development"
+    },
+    "ext": "js,json,ts"
+}
 
-        add: 
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
+{
+    "restartable": "rs",
+    "ignore": [".git", "node_modules", "coverage"],
+    "watch": ["src"],
+    "ext": "ts",
+    "env": {
+        "NODE_ENV": "development"
+    },
+    "execMap": {
+        "ts": "node -r tsconfig-paths/register -r ts-node/register"
+    }
+}
+

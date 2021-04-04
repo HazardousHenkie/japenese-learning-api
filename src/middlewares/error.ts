@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 import httpStatus from 'http-status'
-import config from 'config/config'
-import logger from 'config/logger'
-import ApiError from 'utils/ApiError'
+import config from 'base/config/config'
+import logger from 'base/config/logger'
+import ApiError from 'base/utils/ApiError'
 import { Request, Response, NextFunction } from 'express'
 
 export const errorConverter = (

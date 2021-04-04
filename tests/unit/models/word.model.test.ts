@@ -1,9 +1,10 @@
 import faker from 'faker'
-import Word from 'models/word.model'
+import Word from 'base/models/word.model'
+import { WordType } from 'base/types/words'
 
 describe('Word model', () => {
     describe('Word validation', () => {
-        let newWord
+        let newWord: WordType
         beforeEach(() => {
             newWord = {
                 word: faker.random.word(),

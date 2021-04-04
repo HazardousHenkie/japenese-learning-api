@@ -1,7 +1,7 @@
 {
     "hooks": {
         "post-checkout": "yarn",
-        "pre-commit": "lint-staged && yarn test",
+        "pre-commit": "yarn typecheck && lint-staged && yarn test",
         "post-commit": "git status"
     }
 }
