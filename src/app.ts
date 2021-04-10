@@ -35,10 +35,10 @@ app.use(mongoSanitize())
 app.use(compression())
 
 // enable cors
-app.use(cors())
+app.use(cors({ origin: config.auth0.clientOrigins }))
 
 // TODO: fix cors
-app.options('*', cors() as any)
+app.options('*', cors({ origin: config.auth0.clientOrigins }) as any)
 
 // v1 api routes
 app.use('/v1', routes)

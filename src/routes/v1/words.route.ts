@@ -2,19 +2,31 @@ import wordsController from 'base/controllers/words.controller'
 import express from 'express'
 import validate from 'base/middlewares/validate'
 import wordsValidation from 'base/validations/words.validation'
-
+import auth from 'base/middlewares/auth'
 const router = express.Router()
 
 router
     .route('/')
-    .post(validate(wordsValidation.createWord), wordsController.createWord)
-    .get(validate(wordsValidation.getWords), wordsController.getWords)
+    .post(
+        auth,
+        validate(wordsValidation.createWord),
+        wordsController.createWord
+    )
+    .get(auth, validate(wordsValidation.createWord), wordsController.getWords)
 
 router
     .route('/:wordId')
-    .get(validate(wordsValidation.getWord), wordsController.getWord)
-    .patch(validate(wordsValidation.updateWord), wordsController.updateWord)
-    .delete(validate(wordsValidation.deleteWord), wordsController.deleteWord)
+    .get(auth, validate(wordsValidation.getWord), wordsController.getWord)
+    .patch(
+        auth,
+        validate(wordsValidation.updateWord),
+        wordsController.updateWord
+    )
+    .delete(
+        auth,
+        validate(wordsValidation.deleteWord),
+        wordsController.deleteWord
+    )
 
 export default router
 
