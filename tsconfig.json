@@ -8,10 +8,10 @@
         "sourceMap": false,
         "baseUrl": "src",
         "paths": { "base/*": ["./*"] },
-        "noEmit": true,
+        "outDir": "dist",
         "moduleResolution": "node",
         "pretty": true,
+        "skipLibCheck": true,
         "resolveJsonModule": true
-    },
-    "exclude": ["node_modules"]
+    }
 }

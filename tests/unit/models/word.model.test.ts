@@ -10,6 +10,7 @@ describe('Word model', () => {
                 word: faker.random.word(),
                 reading: faker.random.word(),
                 meaning: faker.random.word(),
+                userId: faker.random.word(),
             }
         })
 

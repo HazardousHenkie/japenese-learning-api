@@ -5,6 +5,7 @@ import Word from 'base/models/word.model'
 import { MongooseWordType, MongooseWordsType } from 'base/types/words'
 
 export const wordOne: MongooseWordType = {
+    userId: faker.random.word(),
     _id: mongoose.Types.ObjectId(),
     word: faker.random.word(),
     reading: faker.random.word(),
@@ -13,6 +14,7 @@ export const wordOne: MongooseWordType = {
 
 export const wordTwo: MongooseWordType = {
     _id: mongoose.Types.ObjectId(),
+    userId: faker.random.word(),
     word: faker.random.word(),
     reading: faker.random.word(),
     meaning: faker.random.word(),

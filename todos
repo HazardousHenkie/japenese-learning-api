@@ -9,10 +9,11 @@ put online
 check automatic swagger generation // fix swager comments
 
 
-add authenticaiton
+
 add user to words
 
 
-check if custom.validation is still working
-check hot reloading...? 
-//https://auth0.com/blog/use-typescript-to-create-a-secure-api-with-nodejs-and-express-adding-authentication-authorization/
+// add authorization other use test
+// add word/userid filter check in combination
+// check word 
+// add ci?
