@@ -3,22 +3,28 @@ import faker from 'faker'
 import httpStatus from 'http-status'
 import app from 'base/app'
 import setupTestDB from '../utils/setupTestDB'
+import getTestAccessToken from '../utils/getTestAccessToken'
 import insertWords, { wordOne, wordTwo } from '../fixtures/word.fixture'
 import { WordType } from 'types/words'
 import Word from 'base/models/word.model'
 
 setupTestDB()
 
+let userId: string | undefined
+let authToken: string
+beforeAll(async () => {
+    authToken = await getTestAccessToken()
+})
+
 describe('Words routes', () => {
     describe('POST /v1/words', () => {
-        let newWord: WordType
+        let newWord: Omit<WordType, 'userId'>
 
         beforeEach(() => {
             newWord = {
                 word: faker.random.word(),
                 reading: faker.random.word(),
                 meaning: faker.random.word(),
-                userId: faker.random.word(),
             }
         })
 
@@ -26,6 +32,7 @@ describe('Words routes', () => {
             const res = await request(app)
                 .post('/v1/words')
                 .send(newWord)
+                .set('Authorization', `Bearer ${authToken}`)
                 .expect(httpStatus.CREATED)
 
             // check body return results
@@ -38,6 +45,7 @@ describe('Words routes', () => {
 
             // check database entry
             const dbWord = await Word.findById(res.body.id)
+            userId = dbWord?.userId
             expect(dbWord).toBeDefined()
             expect(dbWord).toMatchObject({
                 word: newWord.word,
@@ -56,10 +64,11 @@ describe('Words routes', () => {
 
     describe('GET /v1/words', () => {
         test('should return 200 and apply the default query options', async () => {
-            await insertWords([wordOne, wordTwo])
+            await insertWords([wordOne, wordTwo], userId as string)
 
             const res = await request(app)
                 .get('/v1/words')
+                .set('Authorization', `Bearer ${authToken}`)
                 .send()
                 .expect(httpStatus.OK)
 
@@ -76,7 +85,7 @@ describe('Words routes', () => {
         })
 
         // test('should return 401 if access token is missing', async () => {
-        //     await insertWords([wordOne, wordTwo])
+        //     await insertWords([wordOne, wordTwo], userId as string)
 
         //     await request(app)
         //         .get('/v1/words')
@@ -85,20 +94,21 @@ describe('Words routes', () => {
         // })
 
         // test('should return 403 if a non-authorized is trying to access all words', async () => {
-        //     await insertWords([wordOne, wordTwo])
+        //     await insertWords([wordOne, wordTwo], userId as string)
 
         //     await request(app)
         //         .get('/v1/words')
-        //         // .set('Authorization', `Bearer ${wordOneAccessToken}`)
+        //         .set('Authorization', `Bearer faketoken`)
         //         .send()
         //         .expect(httpStatus.FORBIDDEN)
         // })
 
         test('should correctly apply filter on word field', async () => {
-            await insertWords([wordOne, wordTwo])
+            await insertWords([wordOne, wordTwo], userId as string)
 
             const res = await request(app)
                 .get('/v1/words')
+                .set('Authorization', `Bearer ${authToken}`)
                 .query({ word: wordOne.word })
                 .send()
                 .expect(httpStatus.OK)
@@ -113,10 +123,11 @@ describe('Words routes', () => {
 
     describe('GET /v1/words/:wordId', () => {
         test('should return 200 and the word object if data is ok', async () => {
-            await insertWords([wordOne])
+            await insertWords([wordOne], userId as string)
 
             const res = await request(app)
                 .get(`/v1/words/${wordOne._id}`)
+                .set('Authorization', `Bearer ${authToken}`)
                 .send()
                 .expect(httpStatus.OK)
 
@@ -131,7 +142,7 @@ describe('Words routes', () => {
         // only get own words
 
         // test('should return 401 error if access token is missing', async () => {
-        //     await insertWords([wordOne])
+        //     await insertWords([wordOne], userId as string)
 
         //     await request(app)
         //         .get(`/v1/words/${wordOne._id}`)
@@ -142,6 +153,7 @@ describe('Words routes', () => {
         test('should return 400 error if wordId is not a valid mongo id', async () => {
             await request(app)
                 .get('/v1/words/invalidId')
+                .set('Authorization', `Bearer ${authToken}`)
                 .send()
                 .expect(httpStatus.BAD_REQUEST)
         })
@@ -149,6 +161,7 @@ describe('Words routes', () => {
         test('should return 404 error if word is not found', async () => {
             await request(app)
                 .get(`/v1/words/${wordOne._id}`)
+                .set('Authorization', `Bearer ${authToken}`)
                 .send()
                 .expect(httpStatus.NOT_FOUND)
         })
@@ -156,10 +169,11 @@ describe('Words routes', () => {
 
     describe('DELETE /v1/words/:wordId', () => {
         test('should return 204 if data is ok', async () => {
-            await insertWords([wordOne])
+            await insertWords([wordOne], userId as string)
 
             await request(app)
                 .delete(`/v1/words/${wordOne._id}`)
+                .set('Authorization', `Bearer ${authToken}`)
                 .send()
                 .expect(httpStatus.NO_CONTENT)
 
@@ -168,7 +182,7 @@ describe('Words routes', () => {
         })
 
         // test('should return 401 error if access token is missing', async () => {
-        //     await insertWords([wordOne])
+        //     await insertWords([wordOne], userId as string)
 
         //     await request(app)
         //         .delete(`/v1/words/${wordOne._id}`)
@@ -177,10 +191,11 @@ describe('Words routes', () => {
         // })
 
         test('should return 204 if user is trying to delete another word', async () => {
-            await insertWords([wordOne])
+            await insertWords([wordOne], userId as string)
 
             await request(app)
                 .delete(`/v1/words/${wordOne._id}`)
+                .set('Authorization', `Bearer ${authToken}`)
                 .send()
                 .expect(httpStatus.NO_CONTENT)
         })
@@ -188,7 +203,7 @@ describe('Words routes', () => {
         test('should return 400 error if wordId is not a valid mongo id', async () => {
             await request(app)
                 .delete('/v1/words/invalidId')
-
+                .set('Authorization', `Bearer ${authToken}`)
                 .send()
                 .expect(httpStatus.BAD_REQUEST)
         })
@@ -196,6 +211,7 @@ describe('Words routes', () => {
         test('should return 404 error if word already is not found', async () => {
             await request(app)
                 .delete(`/v1/words/${wordOne._id}`)
+                .set('Authorization', `Bearer ${authToken}`)
                 .send()
                 .expect(httpStatus.NOT_FOUND)
         })
@@ -203,7 +219,7 @@ describe('Words routes', () => {
 
     describe('PATCH /v1/words/:wordId', () => {
         test('should return 200 and successfully update word if data is ok', async () => {
-            await insertWords([wordOne])
+            await insertWords([wordOne], userId as string)
             const updateBody = {
                 word: faker.random.word(),
                 reading: faker.random.word(),
@@ -212,6 +228,7 @@ describe('Words routes', () => {
 
             const res = await request(app)
                 .patch(`/v1/words/${wordOne._id}`)
+                .set('Authorization', `Bearer ${authToken}`)
                 .send(updateBody)
                 .expect(httpStatus.OK)
 
@@ -232,7 +249,7 @@ describe('Words routes', () => {
         })
 
         // test('should return 401 error if access token is missing', async () => {
-        //     await insertWords([wordOne])
+        //     await insertWords([wordOne], userId as string)
         //     const updateBody = { name: faker.name.findName() }
 
         //     await request(app)
@@ -246,6 +263,7 @@ describe('Words routes', () => {
 
             await request(app)
                 .patch(`/v1/words/${wordOne._id}`)
+                .set('Authorization', `Bearer ${authToken}`)
                 .send(updateBody)
                 .expect(httpStatus.NOT_FOUND)
         })
@@ -255,6 +273,7 @@ describe('Words routes', () => {
 
             await request(app)
                 .patch(`/v1/words/invalidId`)
+                .set('Authorization', `Bearer ${authToken}`)
                 .send(updateBody)
                 .expect(httpStatus.BAD_REQUEST)
         })

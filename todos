@@ -9,11 +9,10 @@ put online
 check automatic swagger generation // fix swager comments
 
 
-
-add user to words
-
-
-// add authorization other use test
-// add word/userid filter check in combination
+// add authorization other user test (only same user can do stuff on his shit) all
+// add word/userid filter check in combination test
+// add 500 test or 401 authorized test. now its 500 should be 401 (add access token)
+should return 500 when no access tokens test
+should return 401 with faulty acces token test
 // check word 
 // add ci?

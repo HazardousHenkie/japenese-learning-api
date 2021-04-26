@@ -21,6 +21,9 @@ const { value: envVars, error } = envVarsSchema
 const audience = process.env.AUTH0_AUDIENCE
 const domain = process.env.AUTH0_DOMAIN
 const clientOriginUrl = process.env.CLIENT_ORIGIN_URL
+const testingAudience = process.env.AUTH0_TESTING_AUDIENCE
+const testingClientId = process.env.AUTH0_TESTING_CLIENT_ID
+const testingClientSecret = process.env.AUTH0_TESTING_CLIENT_SECRET
 
 if (error) {
     throw new Error(`Config validation error: ${error.message}`)
@@ -54,6 +57,9 @@ export default {
         domain,
         clientOriginUrl,
         clientOrigins,
+        testingAudience,
+        testingClientId,
+        testingClientSecret,
     },
     mongoose: {
         url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),
