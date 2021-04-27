@@ -10,8 +10,11 @@ import Word from 'base/models/word.model'
 
 setupTestDB()
 
+const testToken =
+    'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlN5bEZaRHhvdllKUEVxY1p3WVhLYiJ9.eyJpc3MiOiJodHRwczovL2Rldi1vM3huaTJidy5qcC5hdXRoMC5jb20vIiwic3ViIjoiamRSOE1kbmJ2OEhrMWJvb3prczZvMUlublpEcDdxeWRAY2xpZW50cyIsImF1ZCI6ImphcGFuZXNlLWxlYXJuaW5nLWFwaS5oYXphcmRvdXNoZW5raWUubmwiLCJpYXQiOjE2MTM3ODgzNDUsImV4cCI6MTYxMzg3NDc0NSwiYXpwIjoiamRSOE1kbmJ2OEhrMWJvb3prczZvMUlublpEcDdxeWQiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.e1W6Oy6-DxX3SIwbOVvehuQLpoGSXd84glLuDMUZlCcdmp0m1ETypxLPn_TBFhBCrgsPsFwxq94jDr01WNfnkzpRMWwrbZc63vN5abDY_z8vJ9UJ_REAYR3_S2BYP4_eBHfkLxdyuM9A_EbNwsFmRg9vTFoVmCWLbi0mkvLwvUITyMWQdICIbHsYB_xcdI0B4GTpwQZlxLEt_nZropcfziuNKvs75QbPrdtaX7I76hy6rFkbj3JJ87L3TiTBbKrLtVfVq-9wGR2EHySxfx-AWSnqf9An6jGljkaIblazwRZvTfo5rIj21yWKj5gEAKt6j61_MjXuNylvrxwRnmFcrgf'
 let userId: string | undefined
 let authToken: string
+
 beforeAll(async () => {
     authToken = await getTestAccessToken()
 })
@@ -35,7 +38,6 @@ describe('Words routes', () => {
                 .set('Authorization', `Bearer ${authToken}`)
                 .expect(httpStatus.CREATED)
 
-            // check body return results
             expect(res.body).toEqual({
                 id: expect.anything(),
                 word: newWord.word,
@@ -43,7 +45,6 @@ describe('Words routes', () => {
                 meaning: newWord.meaning,
             })
 
-            // check database entry
             const dbWord = await Word.findById(res.body.id)
             userId = dbWord?.userId
             expect(dbWord).toBeDefined()
@@ -54,12 +55,22 @@ describe('Words routes', () => {
             })
         })
 
-        // test('should return 401 error if access token is missing', async () => {
-        //     await request(app)
-        //         .post('/v1/words')
-        //         .send(newWord)
-        //         .expect(httpStatus.UNAUTHORIZED)
-        // })
+        test('should return 500 error if access token is missing', async () => {
+            await request(app)
+                .post('/v1/words')
+                .send(newWord)
+                .expect(httpStatus.INTERNAL_SERVER_ERROR)
+        })
+
+        test('should return 500 error if access token is present but invalid', async () => {
+            const res = await request(app)
+                .post('/v1/words')
+                .set('Authorization', `Bearer ${testToken}`)
+                .send(newWord)
+                .expect(httpStatus.INTERNAL_SERVER_ERROR)
+
+            expect(res.body.message).toEqual('invalid signature')
+        })
     })
 
     describe('GET /v1/words', () => {
@@ -84,24 +95,31 @@ describe('Words routes', () => {
             })
         })
 
-        // test('should return 401 if access token is missing', async () => {
-        //     await insertWords([wordOne, wordTwo], userId as string)
+        test('should return 500 error if access token is missing', async () => {
+            await request(app)
+                .get('/v1/words')
+                .expect(httpStatus.INTERNAL_SERVER_ERROR)
+        })
 
-        //     await request(app)
-        //         .get('/v1/words')
-        //         .send()
-        //         .expect(httpStatus.UNAUTHORIZED)
-        // })
+        test('should return 500 error if access token is present but invalid', async () => {
+            const res = await request(app)
+                .get('/v1/words')
+                .set('Authorization', `Bearer ${testToken}`)
+                .expect(httpStatus.INTERNAL_SERVER_ERROR)
 
-        // test('should return 403 if a non-authorized is trying to access all words', async () => {
-        //     await insertWords([wordOne, wordTwo], userId as string)
+            expect(res.body.message).toEqual('invalid signature')
+        })
 
-        //     await request(app)
-        //         .get('/v1/words')
-        //         .set('Authorization', `Bearer faketoken`)
-        //         .send()
-        //         .expect(httpStatus.FORBIDDEN)
-        // })
+        test("shouldn't return words if not for curren't user", async () => {
+            await insertWords([wordOne, wordTwo], 'testId')
+
+            const res = await request(app)
+                .get('/v1/words')
+                .set('Authorization', `Bearer ${authToken}`)
+                .send()
+
+            expect(res.body.results).toHaveLength(0)
+        })
 
         test('should correctly apply filter on word field', async () => {
             await insertWords([wordOne, wordTwo], userId as string)
@@ -139,16 +157,31 @@ describe('Words routes', () => {
             })
         })
 
-        // only get own words
+        test("shouldn't delete word if not from current user", async () => {
+            await insertWords([wordOne], userId as string)
+            await insertWords([wordTwo], 'testId')
 
-        // test('should return 401 error if access token is missing', async () => {
-        //     await insertWords([wordOne], userId as string)
+            await request(app)
+                .get(`/v1/words/${wordTwo._id}`)
+                .set('Authorization', `Bearer ${authToken}`)
+                .send()
+                .expect(httpStatus.UNAUTHORIZED)
+        })
 
-        //     await request(app)
-        //         .get(`/v1/words/${wordOne._id}`)
-        //         .send()
-        //         .expect(httpStatus.UNAUTHORIZED)
-        // })
+        test('should return 500 error if access token is missing', async () => {
+            await request(app)
+                .get(`/v1/words/${wordOne._id}`)
+                .expect(httpStatus.INTERNAL_SERVER_ERROR)
+        })
+
+        test('should return 500 error if access token is present but invalid', async () => {
+            const res = await request(app)
+                .get(`/v1/words/${wordOne._id}`)
+                .set('Authorization', `Bearer ${testToken}`)
+                .expect(httpStatus.INTERNAL_SERVER_ERROR)
+
+            expect(res.body.message).toEqual('invalid signature')
+        })
 
         test('should return 400 error if wordId is not a valid mongo id', async () => {
             await request(app)
@@ -181,14 +214,20 @@ describe('Words routes', () => {
             expect(dbWord).toBeNull()
         })
 
-        // test('should return 401 error if access token is missing', async () => {
-        //     await insertWords([wordOne], userId as string)
+        test('should return 500 error if access token is missing', async () => {
+            await request(app)
+                .delete(`/v1/words/${wordOne._id}`)
+                .expect(httpStatus.INTERNAL_SERVER_ERROR)
+        })
 
-        //     await request(app)
-        //         .delete(`/v1/words/${wordOne._id}`)
-        //         .send()
-        //         .expect(httpStatus.UNAUTHORIZED)
-        // })
+        test('should return 500 error if access token is present but invalid', async () => {
+            const res = await request(app)
+                .delete(`/v1/words/${wordOne._id}`)
+                .set('Authorization', `Bearer ${testToken}`)
+                .expect(httpStatus.INTERNAL_SERVER_ERROR)
+
+            expect(res.body.message).toEqual('invalid signature')
+        })
 
         test('should return 204 if user is trying to delete another word', async () => {
             await insertWords([wordOne], userId as string)
@@ -214,6 +253,17 @@ describe('Words routes', () => {
                 .set('Authorization', `Bearer ${authToken}`)
                 .send()
                 .expect(httpStatus.NOT_FOUND)
+        })
+
+        test("shouldn't delete word if not from current user", async () => {
+            await insertWords([wordOne], userId as string)
+            await insertWords([wordTwo], 'testId')
+
+            await request(app)
+                .delete(`/v1/words/${wordTwo._id}`)
+                .set('Authorization', `Bearer ${authToken}`)
+                .send()
+                .expect(httpStatus.UNAUTHORIZED)
         })
     })
 
@@ -248,15 +298,20 @@ describe('Words routes', () => {
             })
         })
 
-        // test('should return 401 error if access token is missing', async () => {
-        //     await insertWords([wordOne], userId as string)
-        //     const updateBody = { name: faker.name.findName() }
+        test('should return 500 error if access token is missing', async () => {
+            await request(app)
+                .patch(`/v1/words/${wordOne._id}`)
+                .expect(httpStatus.INTERNAL_SERVER_ERROR)
+        })
 
-        //     await request(app)
-        //         .patch(`/v1/words/${wordOne._id}`)
-        //         .send(updateBody)
-        //         .expect(httpStatus.UNAUTHORIZED)
-        // })
+        test('should return 500 error if access token is present but invalid', async () => {
+            const res = await request(app)
+                .patch(`/v1/words/${wordOne._id}`)
+                .set('Authorization', `Bearer ${testToken}`)
+                .expect(httpStatus.INTERNAL_SERVER_ERROR)
+
+            expect(res.body.message).toEqual('invalid signature')
+        })
 
         test('should return 404 if user is updating another word that is not found', async () => {
             const updateBody = { word: faker.random.word() }
@@ -276,6 +331,23 @@ describe('Words routes', () => {
                 .set('Authorization', `Bearer ${authToken}`)
                 .send(updateBody)
                 .expect(httpStatus.BAD_REQUEST)
+        })
+
+        test("shouldn't patch word if not from current user", async () => {
+            await insertWords([wordOne], userId as string)
+            await insertWords([wordTwo], 'testId')
+
+            const updateBody = {
+                word: faker.random.word(),
+                reading: faker.random.word(),
+                meaning: faker.random.word(),
+            }
+
+            await request(app)
+                .patch(`/v1/words/${wordTwo._id}`)
+                .set('Authorization', `Bearer ${authToken}`)
+                .send(updateBody)
+                .expect(httpStatus.UNAUTHORIZED)
         })
     })
 })
