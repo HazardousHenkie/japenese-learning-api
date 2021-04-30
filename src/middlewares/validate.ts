@@ -1,9 +1,9 @@
 import httpStatus from 'http-status'
-import pick from 'base/utils/pick'
-import ApiError from 'base/utils/ApiError'
+import pick from '../utils/pick'
+import ApiError from '../utils/ApiError'
 import { NextFunction, Response } from 'express'
 import Joi from 'joi'
-import { UserRequest } from 'base/types/words'
+import { UserRequest } from '../types/words'
 
 type Schema = {
     params?: Joi.ObjectSchema<any>

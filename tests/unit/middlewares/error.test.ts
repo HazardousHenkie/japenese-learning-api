@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
 import httpStatus from 'http-status'
 import httpMocks from 'node-mocks-http'
-import ApiError from 'base/utils/ApiError'
-import { errorConverter, errorHandler } from 'base/middlewares/error'
-import config from 'base/config/config'
-import logger from 'base/config/logger'
+import { errorConverter, errorHandler } from '../../../src/middlewares/error'
+import ApiError from '../../../src/utils/ApiError'
+import logger from '../../../src/config/logger'
+import config from '../../../src/config/config'
 
 describe('Error middlewares', () => {
     describe('Error converter', () => {

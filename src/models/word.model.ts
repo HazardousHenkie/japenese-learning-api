@@ -1,4 +1,4 @@
-import { WordDoc } from 'base/types/words'
+import { WordDoc } from '../types/words'
 import mongoose from 'mongoose'
 import toJSON from './plugins/toJSON.plugin'
 

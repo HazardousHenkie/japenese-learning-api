@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
 import httpStatus from 'http-status'
-import config from 'base/config/config'
-import logger from 'base/config/logger'
-import ApiError from 'base/utils/ApiError'
+import config from '../config/config'
+import logger from '../config/logger'
+import ApiError from '../utils/ApiError'
 import { Response, NextFunction } from 'express'
-import { UserRequest } from 'base/types/words'
+import { UserRequest } from '../types/words'
 
 export const errorConverter = (
     err: ApiError | Error,

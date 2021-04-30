@@ -32,15 +32,15 @@ components:
           example:
             code: 401
             message: Please authenticate
-    Forbidden:
-      description: Forbidden
+    Error:
+      description: error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            code: 403
-            message: Forbidden
+            code: 500
+            message: Unauthorized
     NotFound:
       description: Not found
       content:

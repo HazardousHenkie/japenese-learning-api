@@ -2,7 +2,7 @@ import express from 'express'
 
 import wordRoute from './words.route'
 import docsRoute from './docs.route'
-import config from 'base/config/config'
+import config from '../../config/config'
 
 const router = express.Router()
 
@@ -25,7 +25,6 @@ defaultRoutes.forEach((route) => {
     router.use(route.path, route.route)
 })
 
-/* istanbul ignore next */
 if (config.env === 'development') {
     devRoutes.forEach((route) => {
         router.use(route.path, route.route)

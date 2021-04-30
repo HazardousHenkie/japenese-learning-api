@@ -1,10 +1,10 @@
 import { Response } from 'express'
 import httpStatus from 'http-status'
-import wordService from 'base/services/word.service'
-import ApiError from 'base/utils/ApiError'
-import catchAsync from 'base/utils/catchAsync'
-import pick from 'base/utils/pick'
-import { UserRequest } from 'base/types/words'
+import wordService from '../services/word.service'
+import ApiError from '../utils/ApiError'
+import catchAsync from '../utils/catchAsync'
+import pick from '../utils/pick'
+import { UserRequest } from '../types/words'
 
 const createWord = catchAsync(async (req: UserRequest, res: Response) => {
     const newWord = { userId: req.user?.sub, ...req.body }

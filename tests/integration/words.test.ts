@@ -1,12 +1,13 @@
 import request from 'supertest'
 import faker from 'faker'
 import httpStatus from 'http-status'
-import app from 'base/app'
+
 import setupTestDB from '../utils/setupTestDB'
 import getTestAccessToken from '../utils/getTestAccessToken'
 import insertWords, { wordOne, wordTwo } from '../fixtures/word.fixture'
-import { WordType } from 'types/words'
-import Word from 'base/models/word.model'
+import { WordType } from '../../src/types/words'
+import app from '../../src/app'
+import Word from '../../src/models/word.model'
 
 setupTestDB()
 

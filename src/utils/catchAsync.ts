@@ -1,4 +1,4 @@
-import { UserRequest } from 'base/types/words'
+import { UserRequest } from '../types/words'
 import { Response, NextFunction, RequestHandler } from 'express'
 
 const catchAsync = (fn: RequestHandler) => (

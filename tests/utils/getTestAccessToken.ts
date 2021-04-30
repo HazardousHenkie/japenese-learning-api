@@ -1,5 +1,5 @@
 import axios from 'axios'
-import config from 'base/config/config'
+import config from '../../src/config/config'
 
 const getTestAccessToken = async () => {
     try {
